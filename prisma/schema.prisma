@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")  
+}
+
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum StatutCommande {
+  DEVIS
+  CONFIRMEE
+  LIVREE
+  FACTUREE
+  ANNULEE
+}
+
+enum ModePaiement {
+  ESPECE
+  CARTE_BANCAIRE
+  CHEQUE
+  VIREMENT
+}
+
+model Utilisateur {
+  id               Int      @id @default(autoincrement())
+  supabase_user_id String   @unique @db.Uuid
+  nom              String   @default("Utilisateur")
+  email            String   @unique
+  role             Role
+  created_at       DateTime @default(now())
+  client           Client?
+}
+
+model Client {
+  id                Int      @id @default(autoincrement())
+  utilisateur_id    Int      @unique
+  telephone         String   @default("")
+  date_inscription  DateTime @default(now())
+  utilisateur       Utilisateur @relation(fields: [utilisateur_id], references: [id])
+  commande          Commande[]
+}
+
+model Commande {
+  id              Int   @id @default(autoincrement())
+  client_id       Int
+  date_creation   DateTime  @default(now())
+  status          StatutCommande
+  client          Client  @relation(fields: [client_id], references: [id])
+  LigneCommande LigneCommande[]
+  CommandeFacture CommandeFacture[]
+}
+
+model LigneCommande {
+  id             Int      @id @default(autoincrement())
+  commande_id    Int
+  produit_id     Int
+  quantite       Int
+  prix_unitaire  Float
+  commande       Commande @relation(fields: [commande_id], references: [id])
+  produit        Produit  @relation(fields: [produit_id], references: [id])
+}
+
+model Produit {
+  id           Int       @id @default(autoincrement())
+  nom          String
+  description  String
+  prix         Float
+  promo        Boolean
+  stock        Int
+  image_url    String
+  categorie_id Int
+  categorie    Categorie @relation(fields: [categorie_id], references: [id])
+  lignes       LigneCommande[]
+}
+
+model Categorie {
+  id       Int       @id @default(autoincrement())
+  nom      String
+  produits Produit[]
+}
+
+model Facture {
+  id         Int       @id @default(autoincrement())
+  numero     String
+  date       DateTime
+  total      Float
+  commandes  CommandeFacture[]
+  paiements  LignePaiement[]
+}
+
+model CommandeFacture {
+  commande_id Int
+  facture_id  Int
+  commande    Commande @relation(fields: [commande_id], references: [id])
+  facture     Facture  @relation(fields: [facture_id], references: [id])
+  @@id([commande_id, facture_id])
+}
+
+model Paiement {
+  id             Int       @id @default(autoincrement())
+  date           DateTime
+  mode_paiement  String
+  montant_total  Float
+  lignes         LignePaiement[]
+}
+
+model LignePaiement {
+  id          Int     @id @default(autoincrement())
+  paiement_id Int
+  facture_id  Int
+  montant     Float
+  paiement    Paiement @relation(fields: [paiement_id], references: [id])
+  facture     Facture  @relation(fields: [facture_id], references: [id])
+}
