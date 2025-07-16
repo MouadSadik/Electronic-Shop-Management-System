@@ -18,6 +18,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             <Package className="mr-2 h-4 w-4" /> Les Produits
                         </Button>
                     </Link>
+                    <Link href="/admin/categories">
+                        <Button variant="ghost" className="w-full justify-start">
+                            <Package className="mr-2 h-4 w-4" /> Les categories des produits
+                        </Button>
+                    </Link>
                     <Link href="/admin/commandes">
                         <Button variant="ghost" className="w-full justify-start">
                             <ShoppingCart className="mr-2 h-4 w-4" /> Les commandes

@@ -7,13 +7,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Pencil, UserCircle } from 'lucide-react'
 
-type Utilisateur = {
-  nom: string
-  email: string
-  client?: {
-    telephone: string
-  }
-}
 
 export default function AdminProfile() {
   const [utilisateur, setUtilisateur] = useState<Utilisateur | null>(null)
