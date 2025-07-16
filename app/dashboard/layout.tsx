@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { LogOut, Home, Package, MapPin, User, UserCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import SignOut from '@/components/signout'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -16,6 +17,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Link href="/dashboard/infos">
                         <Button variant="ghost" className="w-full justify-start">
                             <UserCircle className="mr-2 h-4 w-4" /> Mes Informations
+                        </Button>
+                    </Link>
+                    <Link href="/dashboard/produits">
+                        <Button variant="ghost" className="w-full justify-start">
+                            <Package className="mr-2 h-4 w-4" /> Les Produits
                         </Button>
                     </Link>
                     <Link href="/dashboard/commandes">
@@ -34,11 +40,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         </Button>
                     </Link>
                 </nav>
-                <form action="/logout" method="post">
-                    <Button variant="outline" className="w-full mt-8">
-                        <LogOut className="mr-2 h-4 w-4" /> Se déconnecter
-                    </Button>
-                </form>
+                <SignOut />
             </aside>
 
             <main className="flex-1 p-6 bg-gray-50">{children}</main>

@@ -43,7 +43,6 @@ export default function ListProduits() {
     if (!selectedProduit) return
     setErrorMsg('')
     setSuccessMsg('')
-
     try {
       const res = await fetch(`/api/produit/${selectedProduit.id}`, {
         method: 'PUT',
@@ -70,7 +69,6 @@ export default function ListProduits() {
   const handleDelete = async (id: number) => {
     const confirmed = confirm("Voulez-vous vraiment supprimer ce produit ?")
     if (!confirmed) return
-
     try {
       const res = await fetch(`/api/produit/${id}`, {
         method: 'DELETE',
