@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
   const { data: { user }, error } = await supabase.auth.getUser()
 
   if (!user) {
-    // Rediriger vers login si non connecté
+    // Rediriger vers login si non connected
     return NextResponse.redirect(new URL('/login', req.url))
   }
 
