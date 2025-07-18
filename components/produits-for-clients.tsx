@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Alert, AlertDescription } from './ui/alert'
 import { Skeleton } from './ui/skeleton'
-import { Button } from './ui/button'
 import { Badge } from './ui/badge'
+import { AjouterAuPanierButton } from './ajout-au-panier'
 
 const ProduitsList = () => {
   const [produits, setProduits] = useState<Produit[]>([])
@@ -74,9 +74,7 @@ const ProduitsList = () => {
             <p className="text-lg font-semibold">{produit.prix} MAD</p>
           </CardContent>
           <CardFooter>
-            <Button type='submit' className='w-full'>
-              Ajouter au Panier
-            </Button>
+            <AjouterAuPanierButton produitId={produit.id} />
           </CardFooter>
         </Card>
       ))}

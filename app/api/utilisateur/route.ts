@@ -26,4 +26,4 @@ export async function GET() {
     console.error('Erreur API:', err)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
-}
+} 

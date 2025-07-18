@@ -102,9 +102,8 @@ export default function ListProduits() {
           </Alert>
         )}
 
-        {loading ? (
-          <p>Chargement...</p>
-        ) : (
+        {loading ? ( <p>Chargement...</p>) : 
+        (
           <Table>
             <TableHeader>
               <TableRow>
