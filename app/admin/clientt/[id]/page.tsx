@@ -35,9 +35,8 @@ export default async function ClientPage({ params }: Props) {
                     <CardTitle>Commandes du Client</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    {client.commande.length === 0 ? (
-                        <p>Ce client n’a passé aucune commande.</p>
-                    ) : (
+                    {client.commande.length === 0 ? ( <p>Ce client n’a passé aucune commande.</p>) : 
+                    (
                         <ul className="list-disc list-inside space-y-1 text-sm">
                             {client.commande.map((commande) => (
                                 <li key={commande.id}>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -102,8 +103,7 @@ export default function ListProduits() {
           </Alert>
         )}
 
-        {loading ? ( <p>Chargement...</p>) : 
-        (
+        {loading ? (<p>Chargement...</p>) : (
           <Table>
             <TableHeader>
               <TableRow>
@@ -120,14 +120,25 @@ export default function ListProduits() {
               {produits.map((produit) => (
                 <TableRow key={produit.id}>
                   <TableCell>
-                    <img src={produit.image_url} alt={produit.nom} className="w-16 h-16 object-cover" />
+                    <img
+                      src={produit.image_url}
+                      alt={produit.nom}
+                      className="w-16 h-16 object-cover rounded"
+                    />
                   </TableCell>
-                  <TableCell>{produit.nom}</TableCell>
+                  <TableCell>
+                    <Link
+                      href={`/admin/produits/${produit.id}`}
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      {produit.nom}
+                    </Link>
+                  </TableCell>
                   <TableCell>{produit.description}</TableCell>
                   <TableCell>{produit.prix} MAD</TableCell>
                   <TableCell>{produit.stock}</TableCell>
                   <TableCell>{produit.promo ? 'Oui' : 'Non'}</TableCell>
-                  <TableCell>
+                  <TableCell >
                     <Button
                       variant="ghost"
                       size="icon"
@@ -138,7 +149,11 @@ export default function ListProduits() {
                     >
                       <Pencil className="w-5 h-5" />
                     </Button>
-                    <Button variant="destructive" size="icon" onClick={() => handleDelete(produit.id)}>
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      onClick={() => handleDelete(produit.id)}
+                    >
                       <Trash2 className="w-5 h-5" />
                     </Button>
                   </TableCell>
@@ -210,10 +225,13 @@ export default function ListProduits() {
 
             <div className="flex gap-4">
               <Button type="submit">Enregistrer</Button>
-              <Button type="button" variant="outline" onClick={() => {
-                setEditMode(false)
-                setSelectedProduit(null)
-              }}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setEditMode(false)
+                  setSelectedProduit(null)
+                }}
               >
                 Annuler
               </Button>

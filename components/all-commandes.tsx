@@ -6,8 +6,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from './ui/skeleton'
 
-
-
 type Client = {
     id: string
     utilisateur: Utilisateur
@@ -35,7 +33,7 @@ const AllCommandes = () => {
     useEffect(() => {
         const fetchCommandes = async () => {
             try {
-                const res = await fetch('/api/commande')
+                const res = await fetch('/api/admin/commandes')
                 const data = await res.json()
                 if (res.ok) {
                     setCommandes(data.commandes || [])
@@ -61,52 +59,55 @@ const AllCommandes = () => {
                 <CardTitle>Toutes les commandes</CardTitle>
             </CardHeader>
             <CardContent>
-                {commandes.length === 0 ? ( <p>Aucune commande trouvée.</p>) : 
-                (
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Client</TableHead>
-                                <TableHead>Date</TableHead>
-                                <TableHead>Produits</TableHead>
-                                <TableHead>Total</TableHead>
-                                <TableHead>Statut</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {commandes.map((commande) => {
-                                const total = commande.LigneCommande?.reduce(
-                                    (acc, ligne) => acc + ligne.prix_unitaire * ligne.quantite,
-                                    0
-                                ) ?? 0
+                {commandes.length === 0 ? (<p>Aucune commande trouvée.</p>) :
+                    (
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Client</TableHead>
+                                    <TableHead>Date</TableHead>
+                                    <TableHead>Produits</TableHead>
+                                    <TableHead>Total</TableHead>
+                                    <TableHead>Statut</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {commandes.map((commande) => {
+                                    const total = commande.LigneCommande?.reduce(
+                                        (acc, ligne) => acc + ligne.prix_unitaire * ligne.quantite,
+                                        0
+                                    ) ?? 0
 
-                                return (
-                                    <TableRow key={commande.id}>
-                                        <TableCell>
-                                            <Link
-                                                href={`/admin/clientt/${commande.client.id}`}
-                                                className="text-blue-600 underline"
-                                            >
-                                                {commande.client.utilisateur.nom}
-                                            </Link>
-                                        </TableCell>
-                                        <TableCell>{new Date(commande.date_creation).toLocaleDateString()}</TableCell>
-                                        <TableCell>
-                                            <ul className="list-disc ml-4">
-                                                {commande.LigneCommande.map((ligne) => (
-                                                    <li key={ligne.id}>
-                                                        {ligne.produit.nom} x {ligne.quantite}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </TableCell>
-                                        <TableCell>{total.toFixed(2)} MAD</TableCell>
-                                    </TableRow>
-                                )
-                            })}
-                        </TableBody>
-                    </Table>
-                )}
+                                    return (
+                                        <TableRow key={commande.id}>
+                                            <TableCell>
+                                                <Link
+                                                    href={`/admin/clientt/${commande.client.id}`}
+                                                    className="text-blue-600 underline"
+                                                >
+                                                    {commande.client.utilisateur.nom}
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell>{new Date(commande.date_creation).toLocaleDateString()}</TableCell>
+                                            <TableCell>
+                                                <ul className="list-disc ml-4">
+                                                    {commande.LigneCommande.map((ligne) => (
+                                                        <li key={ligne.id}>
+                                                            <Link href={`/admin/produits/${ligne.produit.id}`} className="text-blue-600 underline">
+                                                                {ligne.produit.nom} x {ligne.quantite}
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+
+                                            </TableCell>
+                                            <TableCell>{total.toFixed(2)} MAD</TableCell>
+                                        </TableRow>
+                                    )
+                                })}
+                            </TableBody>
+                        </Table>
+                    )}
             </CardContent>
         </Card>
     )

@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             <ShoppingCart className="mr-2 h-4 w-4" /> Les commandes
                         </Button>
                     </Link>
-                    <Link href="/admin/adresses">
+                    <Link href="/admin/clientt">
                         <Button variant="ghost" className="w-full justify-start">
                             <Users className="mr-2 h-4 w-4" /> Les Clients
                         </Button>
