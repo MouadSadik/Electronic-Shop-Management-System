@@ -90,10 +90,7 @@ export async function POST(req: Request) {
 //get pour obtenir tout les commandes pour afficher a l'admin
 export async function GET() {
   const supabase = createClient()
-  const {
-    data: { user },
-    error: authError,
-  } = await (await supabase).auth.getUser()
+  const { data: { user }, error: authError, } = await (await supabase).auth.getUser()
 
   if (!user || authError) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
