@@ -64,32 +64,25 @@ export default function PanierDialog() {
             body: JSON.stringify({ ligneCommandeId: ligneId }),
         })
         setLignes((prev) => prev.filter((ligne) => ligne.id !== ligneId))
-        setLigneASupprimer(null) // fermer le dialog
-    }
-
-    const confirmer = async () => {
-        await fetch("/api/panier/confirm", {
-            method: "POST",
-        })
-        setLignes([])
-        setOpen(false)
+        setLigneASupprimer(null)
     }
 
     const totalProduits = lignes.reduce((total, ligne) => total + ligne.quantite, 0)
+    const totalPrix = lignes.reduce((total, ligne) => total + ligne.quantite * ligne.produit.prix, 0)
 
     return (
         <>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                <Button variant="ghost" className="relative">
-                    <ShoppingCart className="h-10 w-10" />
-                    {totalProduits > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-                            {totalProduits}
-                        </span>
-                    )}
-                </Button>
-            </DialogTrigger>
+                    <Button variant="ghost" className="relative">
+                        <ShoppingCart className="h-10 w-10" />
+                        {totalProduits > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                                {totalProduits}
+                            </span>
+                        )}
+                    </Button>
+                </DialogTrigger>
                 <DialogContent className="max-w-2xl">
                     <DialogHeader>
                         <DialogTitle>Votre Panier</DialogTitle>
@@ -101,14 +94,17 @@ export default function PanierDialog() {
                             {lignes.map((ligne) => (
                                 <div
                                     key={ligne.id}
-                                    className="flex justify-between items-center border p-2 rounded-md"
+                                    className="flex justify-between items-center border p-2 rounded-md gap-4"
                                 >
-                                    <div>
+
+
+                                    <div className="flex-1">
                                         <p className="font-semibold">{ligne.produit.nom}</p>
                                         <p className="text-sm text-muted-foreground">
                                             {ligne.produit.prix} MAD x {ligne.quantite}
                                         </p>
                                     </div>
+
                                     <div className="flex gap-2 items-center">
                                         <Button variant="outline" size="sm"
                                             onClick={() => updateQuantite(ligne.id, ligne.quantite - 1)}
@@ -150,6 +146,12 @@ export default function PanierDialog() {
                                     </div>
                                 </div>
                             ))}
+
+                            {/* Total global */}
+                            <div className="text-right font-semibold text-lg border-t pt-4">
+                                Total : {totalPrix.toFixed(2)} MAD
+                            </div>
+
                             <Link href={'/dashboard/paiement'}>
                                 <Button className="w-full">
                                     Confirmer la commande

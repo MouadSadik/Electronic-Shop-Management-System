@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { LogOut, Home, Package, MapPin, User, UserCircle, ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import SignOut from '@/components/signout'
-import PanierDialog from './panier/page'
+import PanierDialog from '@/components/panier-dialog'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -35,9 +35,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             <MapPin className="mr-2 h-4 w-4" /> Mes adresses
                         </Button>
                     </Link>
-                    <div  className="w-full  justify-start">
-                        <PanierDialog />
-                    </div>
                 </nav>
                 <SignOut />
             </aside>
