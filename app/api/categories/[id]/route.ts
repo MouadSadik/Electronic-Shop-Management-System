@@ -34,6 +34,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
+//delete
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   const supabase = await createClient()
   const { data: { user }, error: authError, } = await supabase.auth.getUser()

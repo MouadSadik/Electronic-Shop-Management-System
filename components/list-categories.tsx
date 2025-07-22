@@ -2,12 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import {
-  Card, CardContent, CardHeader, CardTitle,
-} from '@/components/ui/card'
+  Card, CardContent, CardHeader, CardTitle, } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import {
-  Alert, AlertDescription,
-} from '@/components/ui/alert'
+import { Alert, AlertDescription, } from '@/components/ui/alert'
 import {
   AlertDialog, AlertDialogCancel, AlertDialogContent,
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,

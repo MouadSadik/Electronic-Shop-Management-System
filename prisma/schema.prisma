@@ -50,6 +50,7 @@ model Client {
   utilisateur_id    Int      @unique
   telephone         String   @default("")
   date_inscription  DateTime @default(now())
+  adresse           String @default("Non fournie")
   utilisateur       Utilisateur @relation(fields: [utilisateur_id], references: [id])
   commande          Commande[]
 }
@@ -59,6 +60,7 @@ model Commande {
   client_id       Int
   date_creation   DateTime  @default(now())
   status          StatutCommande
+  mode_paiement   String?
   client          Client  @relation(fields: [client_id], references: [id])
   LigneCommande LigneCommande[]
   CommandeFacture CommandeFacture[]
