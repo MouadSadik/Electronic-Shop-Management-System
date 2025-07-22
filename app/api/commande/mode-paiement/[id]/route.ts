@@ -20,4 +20,4 @@ export async function PUT( req: Request, { params }: { params: { id: string } } 
     console.error('Erreur lors de la mise à jour du mode de paiement :', error)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
-}
+}   

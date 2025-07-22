@@ -38,5 +38,12 @@ export async function POST(req: Request) {
     },
   })
 
-  return NextResponse.json({ lignes: commande?.LigneCommande || [] })
+  if (!commande) {
+    return NextResponse.json({ lignes: [], commandeId: null })
+  }
+
+  return NextResponse.json({
+    lignes: commande.LigneCommande,
+    commandeId: commande.id,
+  })
 }

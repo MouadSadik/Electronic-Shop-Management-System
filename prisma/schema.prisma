@@ -60,7 +60,7 @@ model Commande {
   client_id       Int
   date_creation   DateTime  @default(now())
   status          StatutCommande
-  mode_paiement   String?
+  mode_paiement   ModePaiement?
   client          Client  @relation(fields: [client_id], references: [id])
   LigneCommande LigneCommande[]
   CommandeFacture CommandeFacture[]

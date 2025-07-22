@@ -31,6 +31,7 @@ interface LigneCommande {
 export default function PanierDialog() {
     const [open, setOpen] = useState(false)
     const [lignes, setLignes] = useState<LigneCommande[]>([])
+    const [commandeId, setCommandeId] = useState<number | null>(null)
     const [ligneASupprimer, setLigneASupprimer] = useState<LigneCommande | null>(null)
 
     useEffect(() => {
@@ -39,7 +40,10 @@ export default function PanierDialog() {
                 method: "POST",
             })
                 .then((res) => res.json())
-                .then((data) => { setLignes(data.lignes) })
+                .then((data) => {
+                    setLignes(data.lignes)
+                    setCommandeId(data.commandeId) // 👈 récupérer l'id de la commande
+                })
                 .catch((err) => console.error(err))
         }
     }, [open])
@@ -71,96 +75,95 @@ export default function PanierDialog() {
     const totalPrix = lignes.reduce((total, ligne) => total + ligne.quantite * ligne.produit.prix, 0)
 
     return (
-        <>
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                    <Button variant="ghost" className="relative">
-                        <ShoppingCart className="h-10 w-10" />
-                        {totalProduits > 0 && (
-                            <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-                                {totalProduits}
-                            </span>
-                        )}
-                    </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                    <DialogHeader>
-                        <DialogTitle>Votre Panier</DialogTitle>
-                    </DialogHeader>
-                    {lignes.length === 0 ? (
-                        <p className="text-center py-4">Panier vide</p>
-                    ) : (
-                        <div className="space-y-4">
-                            {lignes.map((ligne) => (
-                                <div
-                                    key={ligne.id}
-                                    className="flex justify-between items-center border p-2 rounded-md gap-4"
-                                >
-
-
-                                    <div className="flex-1">
-                                        <p className="font-semibold">{ligne.produit.nom}</p>
-                                        <p className="text-sm text-muted-foreground">
-                                            {ligne.produit.prix} MAD x {ligne.quantite}
-                                        </p>
-                                    </div>
-
-                                    <div className="flex gap-2 items-center">
-                                        <Button variant="outline" size="sm"
-                                            onClick={() => updateQuantite(ligne.id, ligne.quantite - 1)}
-                                            disabled={ligne.quantite <= 1}
-                                        >
-                                            -
-                                        </Button>
-                                        <span>{ligne.quantite}</span>
-                                        <Button variant="outline" size="sm"
-                                            onClick={() => updateQuantite(ligne.id, ligne.quantite + 1)}
-                                        >
-                                            +
-                                        </Button>
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <Button variant="destructive" size="sm"
-                                                    onClick={() => setLigneASupprimer(ligne)}
-                                                >
-                                                    Supprimer
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
-                                                </AlertDialogHeader>
-                                                <p>Êtes-vous sûr de vouloir supprimer ce produit du panier ?</p>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>Annuler</AlertDialogCancel>
-                                                    <AlertDialogAction
-                                                        onClick={() => {
-                                                            if (ligneASupprimer) supprimer(ligneASupprimer.id)
-                                                        }}
-                                                    >
-                                                        Confirmer
-                                                    </AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                    </div>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant="ghost" className="relative">
+                    <ShoppingCart className="h-10 w-10" />
+                    {totalProduits > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                            {totalProduits}
+                        </span>
+                    )}
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+                <DialogHeader>
+                    <DialogTitle>Votre Panier</DialogTitle>
+                </DialogHeader>
+                {lignes.length === 0 ? (
+                    <p className="text-center py-4">Panier vide</p>
+                ) : (
+                    <div className="space-y-4">
+                        {lignes.map((ligne) => (
+                            <div
+                                key={ligne.id}
+                                className="flex justify-between items-center border p-2 rounded-md gap-4"
+                            >
+                                <div className="flex-1">
+                                    <p className="font-semibold">{ligne.produit.nom}</p>
+                                    <p className="text-sm text-muted-foreground">
+                                        {ligne.produit.prix} MAD x {ligne.quantite}
+                                    </p>
                                 </div>
-                            ))}
 
-                            {/* Total global */}
-                            <div className="text-right font-semibold text-lg border-t pt-4">
-                                Total : {totalPrix.toFixed(2)} MAD
+                                <div className="flex gap-2 items-center">
+                                    <Button variant="outline" size="sm"
+                                        onClick={() => updateQuantite(ligne.id, ligne.quantite - 1)}
+                                        disabled={ligne.quantite <= 1}
+                                    >
+                                        -
+                                    </Button>
+                                    <span>{ligne.quantite}</span>
+                                    <Button variant="outline" size="sm"
+                                        onClick={() => updateQuantite(ligne.id, ligne.quantite + 1)}
+                                    >
+                                        +
+                                    </Button>
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button variant="destructive" size="sm"
+                                                onClick={() => setLigneASupprimer(ligne)}
+                                            >
+                                                Supprimer
+                                            </Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
+                                            </AlertDialogHeader>
+                                            <p>Êtes-vous sûr de vouloir supprimer ce produit du panier ?</p>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                                                <AlertDialogAction
+                                                    onClick={() => {
+                                                        if (ligneASupprimer) supprimer(ligneASupprimer.id)
+                                                    }}
+                                                >
+                                                    Confirmer
+                                                </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                </div>
                             </div>
+                        ))}
 
-                            <Link href={'/dashboard/paiement'}>
-                                <Button className="w-full">
+                        <div className="text-right font-semibold text-lg border-t pt-4">
+                            Total : {totalPrix.toFixed(2)} MAD
+                        </div>
+
+                        {commandeId && (
+                            <Link href={`/dashboard/paiements/${commandeId}`}>
+                                <Button className="w-full" onClick={() => {
+                                    setOpen(false)
+                                }}>
                                     Confirmer la commande
                                 </Button>
                             </Link>
-                        </div>
-                    )}
-                </DialogContent>
-            </Dialog>
-        </>
+                        )}
+                    </div>
+                )}
+            </DialogContent>
+        </Dialog>
     )
 }

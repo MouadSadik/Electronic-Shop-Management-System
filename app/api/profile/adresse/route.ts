@@ -24,7 +24,7 @@ export async function PUT(req: Request) {
 
     if (!nouvelleAdresse) {
         return NextResponse.json({ error: 'Adresse manquante' }, { status: 400 })
-    }
+    }   
 
     const updatedClient = await prisma.client.update({
         where: { utilisateur_id: utilisateur.id },

@@ -8,7 +8,9 @@ import {
 import {
     Card, CardContent, CardHeader, CardTitle,
 } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+    Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/components/ui/select'
 import { Skeleton } from './ui/skeleton'
 import { toast } from 'sonner'
 
@@ -32,7 +34,7 @@ type Commande = {
     LigneCommande: LigneCommande[]
 }
 
-const statusOptions = ["DEVIS", "CONFIRMEE", "LIVREE", "FACTUREE", "ANNULEE"]
+const statusOptions = ['DEVIS', 'CONFIRMEE', 'LIVREE', 'FACTUREE', 'ANNULEE']
 
 const AllCommandes = () => {
     const [commandes, setCommandes] = useState<Commande[]>([])
@@ -68,11 +70,11 @@ const AllCommandes = () => {
 
         if (res.ok) {
             setCommandes((prev) =>
-                prev.map((cmd) => cmd.id === id ? { ...cmd, status } : cmd)
+                prev.map((cmd) => (cmd.id === id ? { ...cmd, status } : cmd))
             )
-            toast.success("Statut mis à jour")
+            toast.success('Statut mis à jour')
         } else {
-            toast.error("Erreur lors de la mise à jour")
+            toast.error('Erreur lors de la mise à jour')
         }
     }
 
@@ -96,12 +98,14 @@ const AllCommandes = () => {
                                 <TableHead>Produits</TableHead>
                                 <TableHead>Total</TableHead>
                                 <TableHead>Statut</TableHead>
+                                <TableHead>Paiement</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {commandes.map((commande) => {
                                 const total = commande.LigneCommande.reduce(
-                                    (acc, ligne) => acc + ligne.prix_unitaire * ligne.quantite,
+                                    (acc, ligne) =>
+                                        acc + ligne.prix_unitaire * ligne.quantite,
                                     0
                                 )
 
@@ -136,7 +140,9 @@ const AllCommandes = () => {
                                         <TableCell>
                                             <Select
                                                 value={commande.status}
-                                                onValueChange={(value) => updateStatus(commande.id, value)}
+                                                onValueChange={(value) =>
+                                                    updateStatus(commande.id, value)
+                                                }
                                             >
                                                 <SelectTrigger className="w-[140px]">
                                                     <SelectValue />
@@ -149,6 +155,20 @@ const AllCommandes = () => {
                                                     ))}
                                                 </SelectContent>
                                             </Select>
+                                        </TableCell>
+                                        <TableCell>
+                                            {commande.status === 'CONFIRMEE' ? (
+                                                <Link
+                                                    href={`/admin/facture?commandeId=${commande.id}`}
+                                                    className="text-green-600 underline font-medium"
+                                                >
+                                                    Ajouter Paiement
+                                                </Link>
+                                            ) : commande.status === 'FACTUREE' ? (
+                                                <span className="text-green-700 font-semibold">Payé</span>
+                                            ) : (
+                                                <span className="text-gray-400 italic">-</span>
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 )
