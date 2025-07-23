@@ -159,7 +159,7 @@ const AllCommandes = () => {
                                         <TableCell>
                                             {commande.status === 'CONFIRMEE' ? (
                                                 <Link
-                                                    href={`/admin/facture?commandeId=${commande.id}`}
+                                                    href={`/admin/facture-paiement?commandeId=${commande.id}`}
                                                     className="text-green-600 underline font-medium"
                                                 >
                                                     Ajouter Paiement
