@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Pencil, UserCircle } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 type Utilisateur = {
   nom: string
@@ -66,7 +67,19 @@ export default function ClientInfos() {
   }
 
   if (!utilisateur) {
-    return <p>Chargement...</p>
+    return (
+      <div
+        className={cn(
+          "flex items-center justify-center h-screen",
+        )}
+      >
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+          <div className="w-3 h-3 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+          <div className="w-3 h-3 bg-primary rounded-full animate-bounce"></div>
+        </div>
+      </div>
+    );
   }
 
   return (

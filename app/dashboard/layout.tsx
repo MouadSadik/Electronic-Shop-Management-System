@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { LogOut, Home, Package, MapPin, User, UserCircle, ShoppingCart } from 'lucide-react'
+import { LogOut, Home, Package, MapPin, User, UserCircle, ShoppingCart, FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import SignOut from '@/components/signout'
 import PanierDialog from '@/components/panier-dialog'
@@ -30,15 +30,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             <Package className="mr-2 h-4 w-4" /> Mes commandes
                         </Button>
                     </Link>
-                    <Link href="/dashboard/adresses">
+                    <Link href="/dashboard/factures">
                         <Button variant="ghost" className="w-full justify-start">
-                            <MapPin className="mr-2 h-4 w-4" /> Mes adresses
+                            <FileText className="mr-2 h-4 w-4" /> Mes Factures
                         </Button>
                     </Link>
                 </nav>
                 <SignOut />
             </aside>
-            
+
             <main className="flex-1 p-6 bg-gray-50">
                 <div className="absolute top-2 right-8 text-lg  h-10 w-10 ">
                     <PanierDialog />
