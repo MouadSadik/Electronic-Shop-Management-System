@@ -1,35 +1,22 @@
-'use client'
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import {  UserCircle } from 'lucide-react'
+import { UserCircle } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
+import { prisma } from '@/lib/prisma'
+import { notFound } from 'next/navigation'
 
+export default async function AdminInfos() {
+  const supabase = await createClient()
+  const { data: { user }, error: authError, } = await supabase.auth.getUser()
 
-export default function AdminInfos() {
-  const [utilisateur, setUtilisateur] = useState<Utilisateur | null>(null)
-  const [error, setError] = useState('')
+  if (!user) notFound()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/api/utilisateur')
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error || 'Erreur inconnue')
-      } else {
-        setUtilisateur(data.utilisateur)
-      }
-    }
-
-    fetchData()
-  }, [])
-
-
-
-  if (error) {
-    return <Alert variant="destructive"><AlertDescription>{error}</AlertDescription></Alert>
-  }
+  const utilisateur = await prisma.utilisateur.findUnique({
+    where: { supabase_user_id: user.id },
+    include: { client: true },
+  })
 
   if (!utilisateur) {
     return <p>Chargement...</p>

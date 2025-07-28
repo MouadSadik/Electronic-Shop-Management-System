@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
 
-//get pour utilisateur(client ou bien admin)
+//get pour utilisateur(client ou bien admin) : pour le moment c just utilise pour client
 export async function GET() {
   try {
     const supabase = await createClient()
