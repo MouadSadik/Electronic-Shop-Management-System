@@ -2,8 +2,8 @@
 
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import CreateFactureButton from '@/components/ajouter-facture'
-import CreatePaiement from '@/components/ajouter-paiement'
+import CreateFactureButton from '@/app/admin/_components/ajouter-facture'
+import CreatePaiement from '@/app/admin/_components/ajouter-paiement'
 
 export default function FacturePage() {
     const searchParams = useSearchParams()

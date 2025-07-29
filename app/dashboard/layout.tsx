@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import SignOut from '@/components/signout'
-import PanierDialog from '@/components/panier-dialog'
+import PanierDialog from '@/app/dashboard/_components/panier-dialog'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const [open, setOpen] = useState(false)

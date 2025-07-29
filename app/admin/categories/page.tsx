@@ -1,5 +1,5 @@
 import AddCategorie from '@/components/add-categorie'
-import ListCategories from '@/components/list-categories'
+import ListCategories from '@/app/admin/_components/list-categories'
 import React from 'react'
 
 const CategorieHome = () => {

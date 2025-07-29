@@ -1,5 +1,5 @@
-import AddProduit from '@/components/add-produit'
-import ListProduits from '@/components/list-produit'
+import AddProduit from '@/app/admin/_components/add-produit'
+import ListProduits from '@/app/admin/_components/list-produit'
 import React from 'react'
 
 const Produits = () => {

@@ -1,4 +1,4 @@
-import InfosClient from '@/components/client-info'
+import InfosClient from '@/app/dashboard/_components/client-info'
 import React from 'react'
 
 const page = () => {

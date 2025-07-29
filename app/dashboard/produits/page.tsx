@@ -1,5 +1,5 @@
 'use client'
-import { AjouterAuPanierButton } from '@/components/ajout-au-panier'
+import { AjouterAuPanierButton } from '@/app/dashboard/_components/ajout-au-panier'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'

@@ -1,4 +1,4 @@
-import PaiementPage from '@/components/paiement-page'
+import PaiementPage from '@/app/dashboard/_components/paiement-page'
 import React from 'react'
 
 const page = ({ params }: { params: { id: string } }) => {
