@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         const supabase = createClient()
-        const { data: { user }, error: authError } = await (await supabase).auth.getUser()
+        /*const { data: { user }, error: authError } = await (await supabase).auth.getUser()
 
         if (authError || !user) {
             return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
@@ -17,7 +17,7 @@ export async function GET() {
         })
         if (!utilisateur || utilisateur.role != "ADMIN") {
             return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
-        }
+        }*/
 
         const categories = await prisma.categorie.findMany({
             select: {

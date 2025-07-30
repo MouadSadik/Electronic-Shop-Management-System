@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { Label } from './ui/label'
-import { Input } from './ui/input'
-import { Alert, AlertDescription } from './ui/alert'
-import { Button } from './ui/button'
+
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@radix-ui/react-label'
 
 const AddCategorie = () => {
     const [nom, setNom] = useState("")
