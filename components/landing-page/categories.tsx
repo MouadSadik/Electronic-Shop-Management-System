@@ -4,7 +4,7 @@ import React from 'react'
 
 const Categories = () => {
   return (
-    <div className="flex flex-wrap justify-center gap-6 px-4 md:justify-around">
+    <div className="flex flex-wrap justify-center gap-6 px-4 md:justify-around md:mx-10">
       {[{
         href: "/produits/categorie/2",
         Icon: Laptop,

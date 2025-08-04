@@ -17,7 +17,7 @@ const TopSellers = async () => {
     const topProduits = produits.sort((a, b) => b._count.lignes - a._count.lignes).slice(0, 5)
 
     return (
-        <div className='mt-24'>
+        <div className='mt-24 md:mx-10'>
             <h2 className='font-bold text-primary text-3xl text-center mb-10'>
                 Top Sellers
             </h2>
