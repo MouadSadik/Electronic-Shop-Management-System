@@ -62,33 +62,48 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-//delete 
+//delete
 export async function DELETE(req: Request, {params}: {params: {id: string}}) {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
     if (authError || !user) {
         return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    }
-
-    const utilisateur = await prisma.utilisateur.findUnique({
-        where: { supabase_user_id: user.id },
-    })
-    if (!utilisateur || utilisateur.role != "ADMIN") {
-        return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
     }
 
     const id = Number(params.id)
     if(isNaN(id)){
         return NextResponse.json({error: 'Id invalid'}, {status: 400})
     }
-    try{
-        const deletedProduit = await prisma.produit.delete({
-            where: {id},
-            
+
+    try {
+        // Option 1: Check for related records before deletion
+        const relatedLignes = await prisma.ligneCommande.findMany({
+            where: { 
+                produit_id: id
+            }
         })
-        return NextResponse.json({ produit: deletedProduit }, { status: 200 })
+
+        if (relatedLignes.length > 0) {
+            return NextResponse.json({ 
+                error: 'Impossible de supprimer ce produit car il est utilisé dans des commandes existantes' 
+            }, { status: 400 })
+        }
+
+        const deletedProduit = await prisma.produit.delete({
+            where: { id }
+        })
+
+        return NextResponse.json({ 
+            message: 'Produit supprimé avec succès',
+            produit: deletedProduit 
+        }, { status: 200 })
+
     } catch (error) {
         console.error('Erreur lors de la suppression de produit:', error)
-        return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+        
+        return NextResponse.json({ 
+            error: 'Erreur serveur lors de la suppression',
+        }, { status: 500 })
     }
 }

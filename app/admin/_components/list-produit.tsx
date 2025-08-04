@@ -70,7 +70,7 @@ export default function ListProduits() {
   const handleDelete = async (id: number) => {
     const confirmed = confirm("Voulez-vous vraiment supprimer ce produit ?")
     if (!confirmed) return
-    try {
+    try { 
       const res = await fetch(`/api/produit/${id}`, {
         method: 'DELETE',
       })
