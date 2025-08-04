@@ -15,6 +15,7 @@ import {
   NavigationMenuContent,
   NavigationMenuLink
 } from '@/components/ui/navigation-menu'
+import { Skeleton } from '@/components/ui/skeleton'
 
 type Categorie = {
   id: number,
@@ -49,7 +50,7 @@ const Navbar = () => {
       } catch (err) {
         setErrorMsg('Erreur de connexion au serveur.')
       } finally {
-        setLoading(false) 
+        setLoading(false)
       }
     }
 
@@ -60,7 +61,6 @@ const Navbar = () => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       setIsLoggedIn(!!session)
-      setLoading(false)
     }
 
     checkSession()
@@ -74,11 +74,9 @@ const Navbar = () => {
     if (!isLoggedIn) router.push('/login')
   }
 
-  if (loading) return <p>Chargement...</p>
-
   return (
-    <header className="w-full shadow-sm sticky top-0  z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4 md:p-6  flex items-center justify-between gap-4">
+    <header className="w-full shadow-sm sticky top-0 z-50 bg-white">
+      <div className="max-w-7xl mx-auto px-4 py-4 md:p-6 flex items-center justify-between gap-4">
 
         <Link href="/" className="text-xl font-bold text-primary">
           LOGO
@@ -90,22 +88,30 @@ const Navbar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="gap-1">
                   <Menu className="h-5 w-5" />
-                  Categories
+                  Catégories
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-2 p-4 md:w-[200px]">
-                    {categories.map((cat) => (
-                      <li key={cat.id}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href={`/produits/categorie/${cat.id}`}
-                            className="block rounded-md px-2 py-1 text-sm hover:bg-gray-100"
-                          >
-                            {cat.nom}
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
+                    {loading ? (
+                      Array.from({ length: 4 }).map((_, i) => (
+                        <li key={i}>
+                          <Skeleton className="h-6 w-full rounded-md" />
+                        </li>
+                      ))
+                    ) : (
+                      categories.map((cat) => (
+                        <li key={cat.id}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href={`/produits/categorie/${cat.id}`}
+                              className="block rounded-md px-2 py-1 text-sm hover:bg-gray-100"
+                            >
+                              {cat.nom}
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))
+                    )}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -149,16 +155,22 @@ const Navbar = () => {
             defaultValue={searchParams.get('search') || ''}
           />
           <div className="flex flex-col gap-2">
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/produit/categories/${cat.id}`}
-                className="block px-2 py-1 rounded-md text-sm text-gray-800 hover:bg-gray-100"
-                onClick={() => setMenuOpen(false)}
-              >
-                {cat.nom}
-              </Link>
-            ))}
+            {loading ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="h-6 w-full rounded-md" />
+              ))
+            ) : (
+              categories.map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/produits/categorie/${cat.id}`}
+                  className="block px-2 py-1 rounded-md text-sm text-gray-800 hover:bg-gray-100"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {cat.nom}
+                </Link>
+              ))
+            )}
           </div>
         </div>
       )}

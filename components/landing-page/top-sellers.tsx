@@ -1,39 +1,26 @@
-import { AjouterAuPanierButton } from '@/app/dashboard/_components/ajout-au-panier'
-import Navbar from '@/components/landing-page/navbar'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { prisma } from '@/lib/prisma'
-import { notFound } from 'next/navigation'
 import React from 'react'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card'
+import { Badge } from '../ui/badge'
+import { AjouterAuPanierButton } from '@/app/dashboard/_components/ajout-au-panier'
 
-interface Props {
-    params: { id: string }
-}
-
-const CategorieProduits = async ({ params }: Props) => {
-    const categoryId = Number(params.id)
-
-    if (isNaN(categoryId)) return notFound
-
-    const categorie = await prisma.categorie.findUnique({
-        where: { id: categoryId, },
-    })
-
-    if (!categorie) return notFound()
+const TopSellers = async () => {
 
     const produits = await prisma.produit.findMany({
-        where: { categorie_id: categoryId, },
+        include: {
+            _count: {
+                select: { lignes: true, },
+            },
+        },
     })
 
-    if (!produits || produits.length === 0) {
-        return <p className="text-center mt-10 text-gray-500">Aucun produit trouvé dans cette catégorie.</p>
-    }
-
+    const topProduits = produits.sort((a, b) => b._count.lignes - a._count.lignes).slice(0, 5)
 
     return (
-        <div>
-            <Navbar />
-            <h1 className='text-center mt-6 text-3xl font-bold'>{categorie.nom}</h1>
+        <div className='mt-24'>
+            <h2 className='font-bold text-primary text-3xl text-center mb-10'>
+                Top Sellers
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-10">
                 {produits.map((produit) => (
                     <Card key={produit.id} className="overflow-hidden">
@@ -62,4 +49,4 @@ const CategorieProduits = async ({ params }: Props) => {
     )
 }
 
-export default CategorieProduits
+export default TopSellers

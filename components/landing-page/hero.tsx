@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function HeroSection() {
   return (
-    <section className="w-full  py-10 ">
+    <section className="w-full  py-10 h-screen">
       <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-10">
 
         <div className="md:w-1/2 text-center md:text-left space-y-6">
