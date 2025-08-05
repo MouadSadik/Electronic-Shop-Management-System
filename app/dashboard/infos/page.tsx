@@ -87,16 +87,16 @@ export default function ClientInfos() {
       <Card>
         <CardContent className="pt-6 space-y-4">
           <div className="flex items-center space-x-3">
-            <UserCircle className="w-8 h-8 text-gray-700" />
+            <UserCircle className="w-8 h-8 text-primary" />
             <h1 className="text-2xl font-semibold">
               Bienvenue, {utilisateur.nom}
             </h1>
             <Button variant="ghost" size="icon" onClick={() => setEditMode(!editMode)}>
-              <Pencil className="w-5 h-5" />
+              <Pencil className="w-5 h-5 text-primary" />
             </Button>
           </div>
 
-          <p><strong>Email :</strong> {utilisateur.email}</p>
+          <p><strong className='text-primary'>Email :</strong> {utilisateur.email}</p>
 
           {editMode && (
             <div className="space-y-2">

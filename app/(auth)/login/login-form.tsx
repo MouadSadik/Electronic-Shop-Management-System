@@ -62,7 +62,7 @@ const LoginForm = () => {
 
 
     return (
-        <div className='flex justify-center items-center min-h-screen px-4'>
+        <div className='flex justify-center items-center mt-24 px-4'>
             <Card className='w-full max-w-md shadow-xl'>
                 <CardHeader>
                     <CardTitle className='text-2xl'>Connexion</CardTitle>

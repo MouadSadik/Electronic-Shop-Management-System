@@ -85,6 +85,7 @@ export default function ListProduits() {
       setErrorMsg("Erreur serveur lors de la suppression.")
     }
   }
+  
 
   return (
     <Card className="max-w-5xl mx-auto mt-6 mb-10">
@@ -106,14 +107,14 @@ export default function ListProduits() {
         {loading ? (<p>Chargement...</p>) : (
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Image</TableHead>
-                <TableHead>Nom</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Prix</TableHead>
-                <TableHead>Stock</TableHead>
-                <TableHead>Promo</TableHead>
-                <TableHead>Action</TableHead>
+              <TableRow >
+                <TableHead className='text-primary'>Image</TableHead>
+                <TableHead className='text-primary'>Nom</TableHead>
+                <TableHead className='text-primary'>Description</TableHead>
+                <TableHead className='text-primary'>Prix</TableHead>
+                <TableHead className='text-primary'>Stock</TableHead>
+                <TableHead className='text-primary'>Promo</TableHead>
+                <TableHead className='text-primary'>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

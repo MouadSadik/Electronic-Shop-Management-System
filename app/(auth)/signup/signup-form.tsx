@@ -102,7 +102,7 @@ export default function SignupForm() {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+        <div className="flex justify-center items-center mt-20 px-4">
             <Card className="w-full max-w-md shadow-xl">
                 <CardHeader>
                     <CardTitle className="text-2xl">Créer un compte</CardTitle>

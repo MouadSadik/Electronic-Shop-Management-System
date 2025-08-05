@@ -41,8 +41,8 @@ export default function FacturesClient() {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Mes Factures</h1>
+    <div className='mt-10'>
+      <h1 className="text-2xl font-bold mb-4 text-primary">Mes Factures</h1>
       <div className="grid grid-cols-1 gap-4">
         {factures.map((facture) => (
           <Card key={facture.id} className="shadow-md">

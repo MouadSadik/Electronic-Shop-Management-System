@@ -21,27 +21,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <nav className="space-y-2 mt-4">
             <Link href="/dashboard">
                 <Button variant="ghost" className="w-full justify-start">
-                    <Home className="mr-2 h-4 w-4" /> Tableau de bord
+                    <Home className="mr-2 h-4 w-4 text-primary" /> Tableau de bord
                 </Button>
             </Link>
             <Link href="/dashboard/infos">
                 <Button variant="ghost" className="w-full justify-start">
-                    <UserCircle className="mr-2 h-4 w-4" /> Mes Informations
+                    <UserCircle className="mr-2 h-4 w-4 text-primary" /> Mes Informations
                 </Button>
             </Link>
             <Link href="/dashboard/produits">
                 <Button variant="ghost" className="w-full justify-start">
-                    <Package className="mr-2 h-4 w-4" /> Les Produits
+                    <Package className="mr-2 h-4 w-4 text-primary" /> Les Produits
                 </Button>
             </Link>
             <Link href="/dashboard/commandes">
                 <Button variant="ghost" className="w-full justify-start">
-                    <Package className="mr-2 h-4 w-4" /> Mes commandes
+                    <Package className="mr-2 h-4 w-4 text-primary" /> Mes commandes
                 </Button>
             </Link>
             <Link href="/dashboard/factures">
                 <Button variant="ghost" className="w-full justify-start">
-                    <FileText className="mr-2 h-4 w-4" /> Mes Factures
+                    <FileText className="mr-2 h-4 w-4 text-primary" /> Mes Factures
                 </Button>
             </Link>
             <div className="mt-4">

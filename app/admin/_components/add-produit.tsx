@@ -3,7 +3,7 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-import {Card, CardContent, CardHeader, CardTitle,} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -12,6 +12,8 @@ import { Switch } from '@/components/ui/switch'
 
 const AddProduit = () => {
   const router = useRouter()
+  const [showForm, setShowForm] = useState(false)
+
   const [nom, setNom] = useState('')
   const [description, setDescription] = useState('')
   const [prix, setPrix] = useState(0)
@@ -23,6 +25,7 @@ const AddProduit = () => {
   const [errorMsg, setErrorMsg] = useState('')
   const [successMsg, setSuccessMsg] = useState('')
   const [loading, setLoading] = useState(false)
+
   const supabase = createClient()
 
   const uploadImage = async (file: File) => {
@@ -72,6 +75,8 @@ const AddProduit = () => {
       if (!res.ok) throw new Error(data.error || 'Erreur lors de l’ajout.')
 
       setSuccessMsg('Produit ajouté avec succès !')
+
+      // Réinitialisation des champs
       setNom('')
       setDescription('')
       setPrix(0)
@@ -80,6 +85,9 @@ const AddProduit = () => {
       setImageFile(null)
       setImageUrl('')
       setCategorieId(1)
+
+      // Optionnel : cacher le formulaire après ajout
+      setShowForm(false)
     } catch (err: any) {
       setErrorMsg(err.message)
     } finally {
@@ -87,12 +95,32 @@ const AddProduit = () => {
     }
   }
 
+  if (!showForm) {
+    return (
+      <div className="max-w-2xl mx-auto text-center mt-10">
+        <Button onClick={() => setShowForm(true)}>Ajouter Produit</Button>
+      </div>
+    )
+  }
+
   return (
-    <Card className="max-w-2xl mx-auto">
+    <Card className="max-w-2xl mx-auto mt-10">
       <CardHeader>
-        <CardTitle>Ajouter un produit</CardTitle>
+        <CardTitle className='flex justify-between items-center'>
+          <h1>
+          Ajouter un produit
+          </h1>
+          <Button
+          onClick={() => setShowForm(false)}
+          className="mb-6"
+        >
+          Fermer
+        </Button>
+        </CardTitle>
       </CardHeader>
       <CardContent>
+        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label className='mb-3'>Nom</Label>
@@ -132,7 +160,12 @@ const AddProduit = () => {
 
           <div>
             <Label className='mb-3'>Image</Label>
-            <Input className='h-40' type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] || null)} />
+            <Input
+              className='h-40'
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+            />
           </div>
 
           <div>

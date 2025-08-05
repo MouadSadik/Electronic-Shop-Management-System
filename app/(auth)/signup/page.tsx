@@ -1,10 +1,12 @@
 import React from 'react'
 import SignupForm from './signup-form'
+import Navbar from '@/components/landing-page/navbar'
 
 const SignupPage = () => {
   return (
     <div>
-        <SignupForm />
+      <Navbar />
+      <SignupForm />
     </div>
   )
 }

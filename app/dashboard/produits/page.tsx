@@ -39,8 +39,8 @@ const ProduitsList = () => {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {[...Array(3)].map((_, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
+        {[...Array(4)].map((_, i) => (
           <Skeleton key={i} className="h-72 w-full rounded-xl" />
         ))}
       </div>
@@ -56,13 +56,13 @@ const ProduitsList = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
       {produits.map((produit) => (
         <Card key={produit.id} className="overflow-hidden">
           <img
             src={produit.image_url}
             alt={produit.nom}
-            className="w-full h-52 object-cover"
+            className="w-full  object-cover"
           />
           <CardHeader>
             <CardTitle className="flex justify-between items-center">

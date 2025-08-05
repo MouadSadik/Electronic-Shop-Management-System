@@ -1,14 +1,17 @@
 'use client'
+
 import { AjouterAuPanierButton } from '@/app/dashboard/_components/ajout-au-panier'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Separator } from '@radix-ui/react-select'
 import React, { useEffect, useState } from 'react'
 
+interface Props {
+  search: string
+}
 
-const ListProduits = () => {
+const ListProduits = ({ search }: Props) => {
   const [produits, setProduits] = useState<Produit[]>([])
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
@@ -23,10 +26,18 @@ const ListProduits = () => {
         if (!res.ok) {
           setErrorMsg(data.errorMsg || "Erreur lors du chargement.")
         } else {
-          // Filtrer uniquement les produits en stock
-          const produitsEnStock = (data.produits || []).filter(
+          let produitsEnStock = (data.produits || []).filter(
             (produit: Produit) => produit.stock > 0
           )
+
+          // Appliquer le filtre de recherche si fourni
+          if (search.trim()) {
+            const searchLower = search.toLowerCase()
+            produitsEnStock = produitsEnStock.filter(p =>
+              p.nom.toLowerCase().includes(searchLower)
+            )
+          }
+
           setProduits(produitsEnStock)
         }
       } catch (err) {
@@ -36,7 +47,7 @@ const ListProduits = () => {
       }
     }
     fetchProduits()
-  }, [])
+  }, [search])
 
   if (loading) {
     return (

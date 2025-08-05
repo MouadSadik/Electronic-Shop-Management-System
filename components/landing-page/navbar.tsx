@@ -35,8 +35,10 @@ const Navbar = () => {
 
   const handleSearch = useCallback((term: string) => {
     const params = new URLSearchParams(searchParams.toString())
+
     term ? params.set('search', term) : params.delete('search')
-    router.push(`/?${params.toString()}`)
+    router.push(`/produits?${params.toString()}`)
+
   }, [searchParams, router])
 
   useEffect(() => {

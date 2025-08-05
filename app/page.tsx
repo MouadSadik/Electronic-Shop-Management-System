@@ -1,5 +1,6 @@
 import Categories from "@/components/landing-page/categories";
 import Contact from "@/components/landing-page/contact";
+import Footer from "@/components/landing-page/footer";
 import Hero from "@/components/landing-page/hero";
 import Navbar from "@/components/landing-page/navbar";
 import Services from "@/components/landing-page/services";
@@ -14,6 +15,7 @@ export default function Home() {
       <TopSellers />
       <Services />
       <Contact />
+      <Footer />
     </div>
   );
 }

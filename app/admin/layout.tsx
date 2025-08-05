@@ -36,7 +36,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     navItems.map(({ href, label, icon: Icon }) => (
       <Link href={href} key={href} onClick={isMobile ? () => setOpen(false) : undefined}>
         <Button variant="ghost" className="w-full justify-start">
-          <Icon className="mr-2 h-4 w-4" /> {label}
+          <Icon className="mr-2 h-4 w-4 text-primary" /> {label}
         </Button>
       </Link>
     ))
@@ -58,7 +58,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             size="icon"
             className="md:hidden absolute top-4 left-4 z-50"
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-6 w-6 hover:text-primary" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-64 p-4">

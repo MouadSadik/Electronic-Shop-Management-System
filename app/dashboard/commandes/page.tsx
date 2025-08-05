@@ -47,9 +47,9 @@ const CommandesForClient = async () => {
     })
 
     return (
-        <Card>
+        <Card className="mt-10">
             <CardHeader>
-                <CardTitle>Toutes mes Commandes</CardTitle>
+                <CardTitle className="text-primary">Toutes mes Commandes</CardTitle>
             </CardHeader>
             <CardContent>
                 {commandes.length === 0 ? (
@@ -57,7 +57,7 @@ const CommandesForClient = async () => {
                 ) : (
                     <Table>
                         <TableHeader>
-                            <TableRow>
+                            <TableRow className="text-secondary">
                                 <TableHead>Commande</TableHead>
                                 <TableHead>Date</TableHead>
                                 <TableHead>Produits</TableHead>
