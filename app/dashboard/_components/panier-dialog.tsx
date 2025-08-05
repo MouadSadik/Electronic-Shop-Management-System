@@ -1,14 +1,15 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
+import useSWR from 'swr'
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
+} from '@/components/ui/sheet'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -18,9 +19,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   AlertDialogAction
-} from "@/components/ui/alert-dialog"
-import { ShoppingCart } from "lucide-react"
-import Link from "next/link"
+} from '@/components/ui/alert-dialog'
+import { ShoppingCart } from 'lucide-react'
+import Link from 'next/link'
 
 interface LigneCommande {
   id: number
@@ -32,57 +33,47 @@ interface LigneCommande {
   }
 }
 
+
+
+const fetcher = async (url: string) => {
+  const res = await fetch(url, { method: 'POST' })
+  if (!res.ok) throw new Error('Erreur lors du chargement du panier')
+  return res.json()
+}
+
 export default function PanierSheet() {
   const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [lignes, setLignes] = useState<LigneCommande[]>([])
-  const [commandeId, setCommandeId] = useState<number | null>(null)
   const [ligneASupprimer, setLigneASupprimer] = useState<LigneCommande | null>(null)
 
-  useEffect(() => {
-    if (open) {
-      setLoading(true)
-      fetch("/api/commande/devis", {
-        method: "POST",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setLignes(data.lignes)
-          setCommandeId(data.commandeId)
-          setLoading(false)
-        })
-        .catch((err) => {
-          console.error(err)
-          setLoading(false)
-        })
-    }
-  }, [open])
+  const { data, error, isLoading, mutate } = useSWR(
+    open ? '/api/commande/devis' : null,
+    fetcher
+  )
 
-  const updateQuantite = async (ligneId: number, nouvelleQuantite: number) => {
-    await fetch("/api/panier/update", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ligneCommandeId: ligneId, quantite: nouvelleQuantite }),
+  const lignes = data?.lignes || []
+  const commandeId = data?.commandeId || null
+
+  const updateQuantite = async (ligneId: number, quantite: number) => {
+    await fetch('/api/panier/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ligneCommandeId: ligneId, quantite }),
     })
-    setLignes((prev) =>
-      prev.map((ligne) =>
-        ligne.id === ligneId ? { ...ligne, quantite: nouvelleQuantite } : ligne
-      )
-    )
+    mutate() // refresh panier
   }
 
   const supprimer = async (ligneId: number) => {
-    await fetch("/api/panier/delete", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    await fetch('/api/panier/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ligneCommandeId: ligneId }),
     })
-    setLignes((prev) => prev.filter((ligne) => ligne.id !== ligneId))
     setLigneASupprimer(null)
+    mutate() // refresh panier
   }
 
-  const totalProduits = lignes.reduce((total, ligne) => total + ligne.quantite, 0)
-  const totalPrix = lignes.reduce((total, ligne) => total + ligne.quantite * ligne.produit.prix, 0)
+  const totalProduits = lignes.reduce((acc: any, l: { quantite: any }) => acc + l.quantite, 0)
+  const totalPrix = lignes.reduce((acc: number, l: { quantite: number; produit: { prix: number } }) => acc + l.quantite * l.produit.prix, 0)
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -101,7 +92,7 @@ export default function PanierSheet() {
           <SheetTitle>Votre Panier</SheetTitle>
         </SheetHeader>
 
-        {loading ? (
+        {isLoading ? (
           <div className="flex items-center justify-center h-[200px]">
             <div className="flex space-x-2">
               <div className="w-3 h-3 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></div>
@@ -113,7 +104,7 @@ export default function PanierSheet() {
           <p className="text-center py-4">Panier vide</p>
         ) : (
           <div className="space-y-4 mt-4">
-            {lignes.map((ligne) => (
+            {lignes.map((ligne: LigneCommande) => (
               <div
                 key={ligne.id}
                 className="flex justify-between items-center border p-2 rounded-md gap-4"

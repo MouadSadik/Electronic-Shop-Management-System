@@ -1,32 +1,29 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import useSWR from 'swr'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 
-export default function FacturesClient() {
-  const [factures, setFactures] = useState<Facture[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchFactures = async () => {
-      try {
-        const res = await fetch('/api/facture')
-        if (!res.ok) throw new Error('Erreur lors du chargement des factures.')
-        const data = await res.json()
-        setFactures(data)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
+type Facture = {
+  id: string
+  numero: string
+  date: string
+  total: number
+  commandes: {
+    commande: {
+      id: string
+      status: string
     }
+  }[]
+}
 
-    fetchFactures()
-  }, [])
+const fetcher = (url: string) => fetch(url).then(res => res.json())
 
-  if (loading) {
+export default function FacturesClient() {
+  const { data: factures, error, isLoading } = useSWR<Facture[]>('/api/facture', fetcher)
+
+  if (isLoading) {
     return (
       <div className="grid grid-cols-1 gap-4">
         {[1, 2, 3].map((_, i) => (
@@ -36,12 +33,16 @@ export default function FacturesClient() {
     )
   }
 
-  if (factures.length === 0) {
+  if (error) {
+    return <p className="text-red-500">Erreur lors du chargement des factures.</p>
+  }
+
+  if (!factures || factures.length === 0) {
     return <p className="text-muted-foreground">Aucune facture trouvée.</p>
   }
 
   return (
-    <div className='mt-10'>
+    <div className="mt-10">
       <h1 className="text-2xl font-bold mb-4 text-primary">Mes Factures</h1>
       <div className="grid grid-cols-1 gap-4">
         {factures.map((facture) => (
@@ -58,7 +59,9 @@ export default function FacturesClient() {
               <p className="text-sm font-semibold">Commandes associées :</p>
               <ul className="list-disc list-inside text-sm">
                 {facture.commandes.map((item, i) => (
-                  <li key={i}>Commande #{item.commande.id} - Statut : {item.commande.status}</li>
+                  <li key={i}>
+                    Commande #{item.commande.id} – Statut : {item.commande.status}
+                  </li>
                 ))}
               </ul>
             </CardContent>

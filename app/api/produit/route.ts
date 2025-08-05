@@ -45,18 +45,7 @@ export async function POST(req: Request) {
 //get all products 
 export async function GET() {
     const supabase = await createClient()
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
-    if (authError || !user) {
-        return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
-    }
-
-    const utilisateur = await prisma.utilisateur.findUnique({
-        where: { supabase_user_id: user.id }
-    })
-
-    if (!utilisateur) {
-        return NextResponse.json({ error: 'Accès refusé' }, { status: 403 })
-    }
+    
     try {
         const produits = await prisma.produit.findMany({
             select: {

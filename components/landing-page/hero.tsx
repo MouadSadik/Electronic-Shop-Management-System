@@ -3,12 +3,24 @@
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function HeroSection() {
-  return (
-    <section className="w-full  py-10 h-screen">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-10">
+  const [isMobile, setIsMobile] = useState(false)
 
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
+
+  return (
+    <section className="w-full py-10 h-screen">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-10">
         <div className="md:w-1/2 text-center md:text-left space-y-6">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
             Boostez votre setup tech <br />
@@ -35,9 +47,9 @@ export default function HeroSection() {
             width={400}
             height={400}
             className="rounded-xl shadow-lg"
+            priority
           />
         </div>
-
       </div>
     </section>
   )

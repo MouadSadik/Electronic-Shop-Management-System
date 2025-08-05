@@ -5,51 +5,38 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import React, { useEffect, useState } from 'react'
+import useSWR from 'swr'
+import React, { useMemo } from 'react'
 
 interface Props {
   search: string
 }
 
+const fetcher = async (url: string) => {
+  const res = await fetch(url)
+  const data = await res.json()
+  if (!res.ok) throw new Error(data.errorMsg || 'Erreur lors du chargement.')
+  return data.produits
+}
+
 const ListProduits = ({ search }: Props) => {
-  const [produits, setProduits] = useState<Produit[]>([])
-  const [errorMsg, setErrorMsg] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { data: produits, error, isLoading } = useSWR('/api/produit', fetcher, {
+    revalidateOnFocus: true,  // (optionnel) recharge quand l’utilisateur revient
+    dedupingInterval: 60000,  // (optionnel) évite de re-fetch dans les 60s
+  })
 
-  useEffect(() => {
-    const fetchProduits = async () => {
-      setLoading(true)
-      try {
-        const res = await fetch('/api/produit')
-        const data = await res.json()
+  // Appliquer le filtre de recherche (sans re-fetch, c’est local)
+  const produitsFiltres = useMemo(() => {
+    if (!produits) return []
 
-        if (!res.ok) {
-          setErrorMsg(data.errorMsg || "Erreur lors du chargement.")
-        } else {
-          let produitsEnStock = (data.produits || []).filter(
-            (produit: Produit) => produit.stock > 0
-          )
+    return produits
+      .filter((p: Produit) => p.stock > 0)
+      .filter((p: Produit) =>
+        p.nom.toLowerCase().includes(search.toLowerCase())
+      )
+  }, [produits, search])
 
-          // Appliquer le filtre de recherche si fourni
-          if (search.trim()) {
-            const searchLower = search.toLowerCase()
-            produitsEnStock = produitsEnStock.filter(p =>
-              p.nom.toLowerCase().includes(searchLower)
-            )
-          }
-
-          setProduits(produitsEnStock)
-        }
-      } catch (err) {
-        setErrorMsg("Erreur de connexion au serveur")
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchProduits()
-  }, [search])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6 p-10">
         {[...Array(5)].map((_, i) => (
@@ -59,17 +46,17 @@ const ListProduits = ({ search }: Props) => {
     )
   }
 
-  if (errorMsg) {
+  if (error) {
     return (
       <Alert variant="destructive">
-        <AlertDescription>{errorMsg}</AlertDescription>
+        <AlertDescription>{error.message}</AlertDescription>
       </Alert>
     )
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-10">
-      {produits.map((produit) => (
+      {produitsFiltres.map((produit: Produit) => (
         <Card key={produit.id} className="overflow-hidden">
           <img
             src={produit.image_url}

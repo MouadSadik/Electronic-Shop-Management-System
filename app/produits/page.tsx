@@ -3,15 +3,17 @@ import ListProduits from './_components/list-produits'
 import Navbar from '@/components/landing-page/navbar'
 
 interface Props {
-  searchParams: { [key: string]: string }
+  searchParams: Promise<{ [key: string]: string }>
 }
 
-const ProduitsPage = ({searchParams}: Props) => {
+const ProduitsPage = async ({searchParams}: Props) => {
+
+  const resolvedSearchParams = await searchParams
   return (
     <div>
       <Navbar />
       <h1 className='text-center mt-6 text-3xl font-bold'>Nos Produits</h1>
-      <ListProduits search={searchParams.search || ''}/>
+      <ListProduits search={resolvedSearchParams.search || ''}/>
     </div>
   )
 }

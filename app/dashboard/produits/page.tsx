@@ -1,43 +1,26 @@
 'use client'
+
+import useSWR from 'swr'
 import { AjouterAuPanierButton } from '@/app/dashboard/_components/ajout-au-panier'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import React, { useEffect, useState } from 'react'
 
+
+
+const fetcher = async (url: string) => {
+  const res = await fetch(url)
+  const data = await res.json()
+
+  if (!res.ok) throw new Error(data.errorMsg || 'Erreur lors du chargement.')
+  return data.produits
+}
 
 const ProduitsList = () => {
-  const [produits, setProduits] = useState<Produit[]>([])
-  const [errorMsg, setErrorMsg] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { data, error, isLoading } = useSWR<Produit[]>('/api/produit', fetcher)
 
-  useEffect(() => {
-    const fetchProduits = async () => {
-      setLoading(true)
-      try {
-        const res = await fetch('/api/produit')
-        const data = await res.json()
-
-        if (!res.ok) {
-          setErrorMsg(data.errorMsg || "Erreur lors du chargement.")
-        } else {
-          // Filtrer uniquement les produits en stock
-          const produitsEnStock = (data.produits || []).filter(
-            (produit: Produit) => produit.stock > 0
-          )
-          setProduits(produitsEnStock)
-        }
-      } catch (err) {
-        setErrorMsg("Erreur de connexion au serveur")
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchProduits()
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
         {[...Array(4)].map((_, i) => (
@@ -47,22 +30,24 @@ const ProduitsList = () => {
     )
   }
 
-  if (errorMsg) {
+  if (error) {
     return (
       <Alert variant="destructive">
-        <AlertDescription>{errorMsg}</AlertDescription>
+        <AlertDescription>{error.message}</AlertDescription>
       </Alert>
     )
   }
 
+  const produitsEnStock = (data || []).filter((produit) => produit.stock > 0)
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
-      {produits.map((produit) => (
+      {produitsEnStock.map((produit) => (
         <Card key={produit.id} className="overflow-hidden">
           <img
             src={produit.image_url}
             alt={produit.nom}
-            className="w-full  object-cover"
+            className="w-full object-cover"
           />
           <CardHeader>
             <CardTitle className="flex justify-between items-center">

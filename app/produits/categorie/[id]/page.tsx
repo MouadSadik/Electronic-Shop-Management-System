@@ -26,7 +26,10 @@ const CategorieProduits = async ({ params }: Props) => {
     })
 
     if (!produits || produits.length === 0) {
-        return <p className="text-center mt-10 text-gray-500">Aucun produit trouvé dans cette catégorie.</p>
+        return <div>
+            <Navbar />
+            <p className="text-center mt-10 text-gray-500">Aucun produit trouvé dans cette catégorie.</p>
+        </div>
     }
 
 

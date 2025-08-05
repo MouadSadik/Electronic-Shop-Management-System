@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import useSWR from 'swr'
+import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -16,63 +17,47 @@ type Utilisateur = {
   }
 }
 
+const fetcher = (url: string) => fetch(url).then(res => res.json())
+
 export default function ClientInfos() {
-  const [utilisateur, setUtilisateur] = useState<Utilisateur | null>(null)
-  const [error, setError] = useState('')
+  const { data, error, isLoading, mutate } = useSWR('/api/utilisateur', fetcher)
   const [editMode, setEditMode] = useState(false)
   const [nom, setNom] = useState('')
   const [telephone, setTelephone] = useState('')
   const [successMsg, setSuccessMsg] = useState('')
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/api/utilisateur')
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error || 'Erreur inconnue')
-      } else {
-        setUtilisateur(data.utilisateur)
-        setNom(data.utilisateur.nom)
-        setTelephone(data.utilisateur.client?.telephone || '')
-      }
+  // Mettre à jour les champs après le chargement
+  useState(() => {
+    if (data?.utilisateur) {
+      setNom(data.utilisateur.nom)
+      setTelephone(data.utilisateur.client?.telephone || '')
     }
-
-    fetchData()
-  }, [])
+  })
 
   const handleUpdate = async () => {
-    setError('')
     setSuccessMsg('')
-
     const res = await fetch('/api/profile', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nom, telephone }),
     })
 
-    const data = await res.json()
+    const updated = await res.json()
 
-    if (!res.ok) {
-      setError(data.error || 'Erreur inconnue')
-    } else {
-      setUtilisateur(data.utilisateur)
-      setSuccessMsg('Infos mises à jour.')
-      setEditMode(false)
-    }
+    if (!res.ok) return alert(updated.error || 'Erreur inconnue')
+
+    mutate() // Met à jour automatiquement le cache SWR
+    setSuccessMsg('Infos mises à jour.')
+    setEditMode(false)
   }
 
   if (error) {
-    return <Alert variant="destructive"><AlertDescription>{error}</AlertDescription></Alert>
+    return <Alert variant="destructive"><AlertDescription>{error.message || "Erreur"}</AlertDescription></Alert>
   }
 
-  if (!utilisateur) {
+  if (isLoading || !data) {
     return (
-      <div
-        className={cn(
-          "flex items-center justify-center h-screen",
-        )}
-      >
+      <div className={cn("flex items-center justify-center h-screen")}>
         <div className="flex space-x-2">
           <div className="w-3 h-3 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></div>
           <div className="w-3 h-3 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
@@ -81,6 +66,8 @@ export default function ClientInfos() {
       </div>
     );
   }
+
+  const utilisateur = data.utilisateur
 
   return (
     <main className="max-w-2xl mx-auto py-10 px-4 space-y-4">
