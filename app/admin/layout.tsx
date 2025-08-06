@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/sheet'
 
 const navItems = [
-  { href: '/admin', label: 'Tableau de bord', icon: Home },
+  { href: '/admin/stats', label: 'Tableau de bord', icon: Home },
   { href: '/admin/produits', label: 'Les Produits', icon: Package },
   { href: '/admin/categories', label: 'Les catégories des produits', icon: Package },
   { href: '/admin/commandes', label: 'Les commandes', icon: ShoppingCart },

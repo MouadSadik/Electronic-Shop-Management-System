@@ -19,7 +19,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogAction
+  AlertDialogAction,
+  AlertDialogDescription
 } from '@/components/ui/alert-dialog'
 import { ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
@@ -148,19 +149,13 @@ export default function PanierSheet() {
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Êtes-vous sûr de vouloir supprimer ce produit du panier ?
+                        </AlertDialogDescription>
                       </AlertDialogHeader>
-                      <p>Êtes-vous sûr de vouloir supprimer ce produit du panier ?</p>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Annuler</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => {
-                            if (ligneASupprimer) supprimer(ligneASupprimer.id)
-                          }}
-                        >
-                          Confirmer
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
+                      <AlertDialogFooter>...</AlertDialogFooter>
                     </AlertDialogContent>
+
                   </AlertDialog>
                 </div>
               </div>
