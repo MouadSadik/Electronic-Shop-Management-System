@@ -18,6 +18,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
 } from '@/components/ui/sheet'
 
 const navItems = [
@@ -64,8 +65,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <SheetContent side="left" className="w-64 p-4">
           <SheetHeader>
             <SheetTitle>Espace Admin</SheetTitle>
+            <SheetDescription>Accédez aux différentes sections d'administration.</SheetDescription>
           </SheetHeader>
-          <div className="mt-4 space-y-2">{renderNavLinks(true)}</div>
+          <div className=" space-y-2">{renderNavLinks(true)}</div>
           <div className="mt-6">
             <SignOut />
           </div>

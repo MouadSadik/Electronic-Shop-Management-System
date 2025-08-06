@@ -3,12 +3,13 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { notFound } from 'next/navigation'
 
 type Props = {
-    params: { id: string }
+    params: Promise<{ id: string }>
 }
 
 export default async function ClientPage({ params }: Props) {
+    const {id} = await params
     const client = await prisma.client.findUnique({
-        where: { id: parseInt(params.id) },
+        where: { id: parseInt(id) },
         include: {
             utilisateur: true,
             commande: true,

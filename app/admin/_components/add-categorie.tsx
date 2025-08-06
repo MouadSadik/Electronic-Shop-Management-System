@@ -9,9 +9,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@radix-ui/react-label'
 
 const AddCategorie = () => {
+    const [showForm, setShowForm] = useState(false)
     const [nom, setNom] = useState("")
     const [errorMsg, setErrorMsg] = useState('')
-    const [successMsg, setSuccessMsg] = useState('')
+    const [successMsg, setSuccessMsg] = useState('') 
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -41,10 +42,26 @@ const AddCategorie = () => {
         }
     }
 
+    if(!showForm){
+        return (
+            <div className="max-w-2xl mx-auto text-center mt-10">
+                <Button onClick={()=> setShowForm(true)}>Ajouter Categorie</Button>
+            </div>
+        )
+    }
+
     return (
-        <Card className='w-full max-w-sm mt-20'>
+        <Card className='w-full max-w-sm mt-20 '>
             <CardHeader>
-                <CardTitle>Ajouter Catégorie</CardTitle>
+                <CardTitle className='flex justify-between'> 
+                    <h1>Ajouter Catégorie</h1>
+                    <Button
+                        onClick={() => setShowForm(false)}
+                        className="mb-6"
+                    >
+                        Fermer
+                    </Button>
+                </CardTitle>
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit}>

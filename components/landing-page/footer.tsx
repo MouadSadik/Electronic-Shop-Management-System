@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Copyright } from 'lucide-react';
 import Link from 'next/link';
 
 
@@ -23,33 +23,33 @@ const Footer = () => {
                         <h3 className="text-white text-lg font-semibold mb-4">Categories </h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="#home" className="text-secondary hover:text-white transition-colors duration-300">
+                                <a href="/produits/categorie/2" className="text-secondary hover:text-white transition-colors duration-300">
                                     Pc Portable
                                 </a>
                             </li>
                             <li>
-                                <a href="#activities" className="text-secondary hover:text-white transition-colors duration-300">
+                                <a href="/produits/categorie/7" className="text-secondary hover:text-white transition-colors duration-300">
                                     Gaming
                                 </a>
                             </li>
                             <li>
-                                <a href="#events" className="text-secondary hover:text-white transition-colors duration-300">
+                                <a href="/produits/categorie/3" className="text-secondary hover:text-white transition-colors duration-300">
                                     Smarthphone
                                 </a>
                             </li>
                             <li>
-                                <a href="#galerie" className="text-secondary hover:text-white transition-colors duration-300">
-                                    Les ecouteurs 
+                                <a href="/produits/categorie/1" className="text-secondary hover:text-white transition-colors duration-300">
+                                    Les ecouteurs
                                 </a>
                             </li>
                             <li>
-                                <a href="#galerie" className="text-secondary hover:text-white transition-colors duration-300">
-                                    TV 
+                                <a href="/produits/categorie/8" className="text-secondary hover:text-white transition-colors duration-300">
+                                    TV
                                 </a>
                             </li>
                         </ul>
                     </div>
-
+ 
                     {/* Contact Info */}
                     <div>
                         <h3 className="text-white text-lg font-semibold mb-4">Contact</h3>
@@ -91,12 +91,22 @@ const Footer = () => {
             </div>
 
             {/* Bottom Bar */}
-            <div className="border-t border-violet-800">
+            <div className="border-t border-violet-800 ">
                 <div className="max-w-7xl mx-auto px-4 py-6">
-                    <div className="flex flex-col md:flex-row justify-between items-center">
-                        <div className="text-sm text-secondary">
-                            © 2025 ElectroShop. Tous droits réservés.
-                            créer par <Link href="https://www.linkedin.com/in/mouad-sadik-5b8907257/">Mouad Sadik</Link>
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-secondary text-center md:text-left">
+                        <div className="flex items-center justify-center md:justify-start">
+                            <Copyright className="h-4 w-4 mr-1" />
+                            <span>2025 ElectroShop. Tous droits réservés.</span>
+                        </div>
+                        <div>
+                            Créé par{' '}
+                            <Link
+                                href="https://www.linkedin.com/in/mouad-sadik-5b8907257/"
+                                className="text-secondary hover:underline"
+                                target="_blank"
+                            >
+                                Mouad Sadik
+                            </Link>
                         </div>
                     </div>
                 </div>

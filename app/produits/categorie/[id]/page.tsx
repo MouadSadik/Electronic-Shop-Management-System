@@ -7,11 +7,12 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 
 interface Props {
-    params: { id: string }
+    params: Promise<{ id: string }>
 }
 
 const CategorieProduits = async ({ params }: Props) => {
-    const categoryId = Number(params.id)
+    const {id} = await params
+    const categoryId = Number(id)
 
     if (isNaN(categoryId)) return notFound
 

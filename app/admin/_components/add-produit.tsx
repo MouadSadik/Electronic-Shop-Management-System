@@ -1,7 +1,6 @@
 'use client'
 
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -11,7 +10,6 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Switch } from '@/components/ui/switch'
 
 const AddProduit = () => {
-  const router = useRouter()
   const [showForm, setShowForm] = useState(false)
 
   const [nom, setNom] = useState('')
@@ -108,12 +106,12 @@ const AddProduit = () => {
       <CardHeader>
         <CardTitle className='flex justify-between items-center'>
           <h1>
-          Ajouter un produit
+          Ajouter un produit 
           </h1>
           <Button
           onClick={() => setShowForm(false)}
           className="mb-6"
-        >
+          >
           Fermer
         </Button>
         </CardTitle>

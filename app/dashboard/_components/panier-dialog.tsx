@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -90,6 +91,7 @@ export default function PanierSheet() {
       <SheetContent className="max-w-md w-full">
         <SheetHeader>
           <SheetTitle>Votre Panier</SheetTitle>
+          <SheetDescription>Vos produits commandes</SheetDescription>
         </SheetHeader>
 
         {isLoading ? (

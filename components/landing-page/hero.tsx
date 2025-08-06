@@ -34,7 +34,7 @@ export default function HeroSection() {
             <Link href="/produits">
               <Button size="lg">Acheter maintenant</Button>
             </Link>
-            <Link href="/categories">
+            <Link href="/produits">
               <Button variant="outline" size="lg">Explorer les catégories</Button>
             </Link>
           </div>

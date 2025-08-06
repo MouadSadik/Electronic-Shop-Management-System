@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 
 const fetcher = async (url: string) => {
-  const res = await fetch(url)
+  const res = await fetch(url) 
   const data = await res.json()
 
   if (!res.ok) throw new Error(data.errorMsg || 'Erreur lors du chargement.')

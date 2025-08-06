@@ -5,24 +5,24 @@ import React from 'react'
 const Categories = () => {
   return (
     <div className="flex flex-wrap justify-center gap-6 px-4 md:justify-around md:mx-10">
-      {[{
+      {[{ 
         href: "/produits/categorie/2",
         Icon: Laptop,
         label: "Pc Portable"
       }, {
-        href: "/produits/categorie/2",
+        href: "/produits/categorie/7",
         Icon: Gamepad2,
         label: "Gaming"
       }, {
-        href: "/produits/categorie/2",
+        href: "/produits/categorie/3",
         Icon: Smartphone,
         label: "Smartphone"
       }, {
-        href: "/produits/categorie/2",
+        href: "/produits/categorie/1",
         Icon: Headphones,
         label: "Les Ecouteurs"
       }, {
-        href: "/produits/categorie/2",
+        href: "/produits/categorie/8",
         Icon: Tv2,
         label: "TV"
       }].map(({ href, Icon, label }) => (

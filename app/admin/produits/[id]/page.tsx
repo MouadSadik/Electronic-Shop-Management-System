@@ -4,12 +4,13 @@ import { Badge } from '@/components/ui/badge'
 import { notFound } from 'next/navigation'
 
 type Props = {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function ProductPage({ params }: Props) {
+  const {id} = await params
   const produit = await prisma.produit.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(id) },
   })
 
   if (!produit) return notFound()
