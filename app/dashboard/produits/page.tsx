@@ -7,8 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
-// Définition de l'interface Produit
-interface Produit {
+// Export the interface so it can be used elsewhere
+export type Produit = {
   id: number
   nom: string
   stock: number
@@ -22,14 +22,14 @@ interface Produit {
 const fetcher = async (url: string): Promise<Produit[]> => {
   const res = await fetch(url)
   const data = await res.json()
-
+  
   if (!res.ok) throw new Error(data.errorMsg || 'Erreur lors du chargement.')
   return data.produits
 }
 
 const ProduitsList = () => {
   const { data, error, isLoading } = useSWR<Produit[]>('/api/produit', fetcher)
-
+  
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
@@ -39,7 +39,7 @@ const ProduitsList = () => {
       </div>
     )
   }
-
+  
   if (error) {
     return (
       <Alert variant="destructive">
@@ -47,10 +47,9 @@ const ProduitsList = () => {
       </Alert>
     )
   }
-
-  // On filtre seulement les produits en stock
-  const produitsEnStock = (data || []).filter((produit) => produit.stock > 0)
-
+  
+  const produitsEnStock = (data || []).filter((p) => p.stock > 0)
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-10">
       {produitsEnStock.map((produit) => (

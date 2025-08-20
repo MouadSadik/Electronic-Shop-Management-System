@@ -8,6 +8,16 @@ import { Skeleton } from '@/components/ui/skeleton'
 import useSWR from 'swr'
 import React, { useMemo } from 'react'
 
+export type Produit = {
+  id: number
+  nom: string
+  stock: number
+  image_url: string
+  promo: boolean
+  description: string
+  prix: number
+}
+
 interface Props {
   search: string
 }
