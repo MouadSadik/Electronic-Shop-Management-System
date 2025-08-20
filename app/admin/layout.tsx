@@ -9,6 +9,7 @@ import {
   Users,
   User,
   Menu,
+  ArrowLeft,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import SignOut from '@/components/signout'
@@ -22,13 +23,14 @@ import {
 } from '@/components/ui/sheet'
 
 const navItems = [
-  { href: '/admin/stats', label: 'Tableau de bord', icon: Home },
+  { href: '/admin', label: 'Tableau de bord', icon: Home },
   { href: '/admin/produits', label: 'Les Produits', icon: Package },
   { href: '/admin/categories', label: 'Les catégories des produits', icon: Package },
   { href: '/admin/commandes', label: 'Les commandes', icon: ShoppingCart },
   { href: '/admin/clientt', label: 'Les Clients', icon: Users },
   { href: '/admin/infos', label: 'Admin', icon: User },
 ]
+
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
@@ -44,14 +46,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar desktop */}
-      <aside className="hidden md:block w-64 bg-white border-r p-4 space-y-4">
+      {/* desktop */}
+      <aside className="hidden md:flex fixed top-0 left-0 h-screen w-64 bg-white border-r p-4 flex-col ">
+        
         <h2 className="text-xl font-bold mb-6">Espace Admin</h2>
         <nav className="space-y-2">{renderNavLinks()}</nav>
         <SignOut />
+        <Link className='items-center flex justify-center' href="/">
+          <Button className='mt-5 w-full'>
+            <ArrowLeft />
+            Retour A L'accueil
+          </Button>
+        </Link>
       </aside>
 
-      {/* Sidebar mobile */}
+      {/* mobile */}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
@@ -59,22 +68,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             size="icon"
             className="md:hidden absolute top-4 left-4 z-50"
           >
-            <Menu className="h-6 w-6 hover:text-primary" />
+            <Menu className="h-12 w-12 font bold hover:text-primary" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-64 p-4">
           <SheetHeader>
+            
             <SheetTitle>Espace Admin</SheetTitle>
             <SheetDescription>Accédez aux différentes sections d'administration.</SheetDescription>
           </SheetHeader>
           <div className=" space-y-2">{renderNavLinks(true)}</div>
-          <div className="mt-6">
+          <div className="mt-4">
             <SignOut />
+            <Link className='items-center flex justify-center' href="/">
+          <Button className='mt-5 w-full'>
+            <ArrowLeft />
+            Retour A L'accueil
+          </Button>
+        </Link>
           </div>
         </SheetContent>
       </Sheet>
 
-      <main className="flex-1 p-4 md:p-6 bg-gray-50">{children}</main>
+      <main className="flex-1 p-4 md:p-6 md:ml-64 bg-gray-50">{children}</main>
     </div>
   )
 }

@@ -8,6 +8,7 @@ import {
   FileText,
   Menu,
   UserCircle,
+  ArrowLeft,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -36,7 +37,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <UserCircle className="mr-2 h-4 w-4 text-primary" /> Mes Informations
         </Button>
       </Link>
-      <Link href="/dashboard/produits" onClick={isMobile ? () => setOpen(false) : undefined}>
+      <Link href="/produits" onClick={isMobile ? () => setOpen(false) : undefined}>
         <Button variant="ghost" className="w-full justify-start">
           <Package className="mr-2 h-4 w-4 text-primary" /> Les Produits
         </Button>
@@ -53,6 +54,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </Link>
       <div className="mt-4">
         <SignOut />
+        <Link className='items-center flex justify-center' href="/">
+          <Button className='mt-5 w-full'>
+            <ArrowLeft />
+            Retour A L'accueil
+          </Button>
+        </Link>
       </div>
     </nav>
   )
@@ -60,7 +67,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex min-h-screen">
       {/* Sidebar Desktop */}
-      <aside className="hidden md:block w-64 bg-white border-r p-4 space-y-4">
+      <aside className="hidden md:flex fixed top-0 left-0 h-screen w-64 bg-white border-r p-4 flex-col">
+        
         <h2 className="text-xl font-bold">Espace Client</h2>
         {navLinks()}
       </aside>
@@ -82,7 +90,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </Sheet>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-6 bg-gray-50 relative">
+      <main className="flex-1 p-4 md:p-6 md:ml-64 bg-gray-50 relative">
         <div className="absolute top-4 right-4 z-40">
           <PanierDialog />
         </div>

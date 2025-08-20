@@ -27,7 +27,6 @@ export default function DashboardClient() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Loader2 className="animate-spin text-muted" />
-                Chargement...
               </CardTitle>
             </CardHeader>
             <CardContent>

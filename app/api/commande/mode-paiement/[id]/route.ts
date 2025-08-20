@@ -1,10 +1,11 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
-export async function PUT( req: Request, { params }: { params: { id: string } } ) {
+export async function PUT( req: Request, { params }: { params: Promise<{ id: string }> } ) {
   try {
     const { mode_paiement } = await req.json()
-    const commandeId = parseInt(params.id)
+    const resolvedParams = await params
+    const commandeId = parseInt(resolvedParams.id)
 
     if (!mode_paiement) {
       return NextResponse.json({ error: 'Mode de paiement requis' }, { status: 400 })

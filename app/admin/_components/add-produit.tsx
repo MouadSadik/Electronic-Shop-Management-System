@@ -95,7 +95,7 @@ const AddProduit = () => {
 
   if (!showForm) {
     return (
-      <div className="max-w-2xl mx-auto text-center mt-10">
+      <div className="max-w-2xl mx-auto md:text-center mt-10">
         <Button onClick={() => setShowForm(true)}>Ajouter Produit</Button>
       </div>
     )

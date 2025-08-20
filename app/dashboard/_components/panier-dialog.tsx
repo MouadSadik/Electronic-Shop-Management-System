@@ -19,10 +19,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogAction,
-  AlertDialogDescription
+  AlertDialogDescription,
+  AlertDialogAction
 } from '@/components/ui/alert-dialog'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 
 interface LigneCommande {
@@ -89,7 +89,7 @@ export default function PanierSheet() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="max-w-md w-full">
+      <SheetContent className="max-w-md w-full p-5">
         <SheetHeader>
           <SheetTitle>Votre Panier</SheetTitle>
           <SheetDescription>Vos produits commandes</SheetDescription>
@@ -110,7 +110,7 @@ export default function PanierSheet() {
             {lignes.map((ligne: LigneCommande) => (
               <div
                 key={ligne.id}
-                className="flex justify-between items-center border p-2 rounded-md gap-4"
+                className="flex justify-between mx-5 items-center border p-2 rounded-md gap-4"
               >
                 <div className="flex-1">
                   <p className="font-semibold">{ligne.produit.nom}</p>
@@ -143,9 +143,10 @@ export default function PanierSheet() {
                         size="sm"
                         onClick={() => setLigneASupprimer(ligne)}
                       >
-                        Supprimer
+                        <Trash2 className="w-4 h-4" />
                       </Button>
                     </AlertDialogTrigger>
+
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
@@ -153,10 +154,21 @@ export default function PanierSheet() {
                           Êtes-vous sûr de vouloir supprimer ce produit du panier ?
                         </AlertDialogDescription>
                       </AlertDialogHeader>
-                      <AlertDialogFooter>...</AlertDialogFooter>
-                    </AlertDialogContent>
 
+                      <AlertDialogFooter className="flex justify-end gap-2">
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => {
+                            if (ligneASupprimer) supprimer(ligneASupprimer.id)
+                          }}
+                          className="bg-red-600 text-white hover:bg-red-700"
+                        >
+                          Supprimer
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
                   </AlertDialog>
+
                 </div>
               </div>
             ))}
@@ -167,7 +179,7 @@ export default function PanierSheet() {
 
             {commandeId && (
               <Link href={`/dashboard/paiements/${commandeId}`}>
-                <Button className="w-full" onClick={() => setOpen(false)}>
+                <Button className="w-full " onClick={() => setOpen(false)}>
                   Confirmer la commande
                 </Button>
               </Link>

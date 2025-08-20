@@ -2,11 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
-export async function PUT(
+export async function PUT( 
     req: Request,
-    context: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
-    const { params } = context;
+    const params = await context.params; 
 
     const supabase = await createClient();
     const {

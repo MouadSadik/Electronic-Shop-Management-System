@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
@@ -10,7 +10,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
 
-    const id = Number(params.id)
+    const resolvedParams = await params
+    const id = Number(resolvedParams.id)
+
     if (isNaN(id)) {
         return NextResponse.json({ error: 'ID invalide' }, { status: 400 })
     }

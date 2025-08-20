@@ -35,9 +35,10 @@ const Navbar = () => {
 
   const handleSearch = useCallback((term: string) => {
     const params = new URLSearchParams(searchParams.toString())
-
+    console.log(term)
     term ? params.set('search', term) : params.delete('search')
     router.push(`/produits?${params.toString()}`)
+
 
   }, [searchParams, router])
 
@@ -76,12 +77,14 @@ const Navbar = () => {
     if (!isLoggedIn) router.push('/login')
   }
 
+  if(errorMsg) return <p>Erreur</p>
+
   return (
     <header className="w-full shadow-sm sticky top-0 z-50 bg-white">
       <div className="max-w-7xl mx-auto px-4 py-4 md:p-6 flex items-center justify-between gap-4">
 
         <Link href="/" className="text-xl font-bold text-primary">
-          LOGO
+          ElectroShop
         </Link>
 
         <div className="hidden md:flex items-center gap-4 flex-1">

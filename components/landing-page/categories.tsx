@@ -22,7 +22,7 @@ const Categories = () => {
         Icon: Headphones,
         label: "Les Ecouteurs"
       }, {
-        href: "/produits/categorie/8",
+        href: "/produits/categorie/9",
         Icon: Tv2,
         label: "TV"
       }].map(({ href, Icon, label }) => (

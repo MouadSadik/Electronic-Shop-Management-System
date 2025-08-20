@@ -13,6 +13,7 @@ import {
     AlertDialogCancel,
     AlertDialogAction,
 } from "@/components/ui/alert-dialog"
+import { LogOut } from 'lucide-react'
 
 export default function SignOut() {
     const router = useRouter()
@@ -31,6 +32,7 @@ export default function SignOut() {
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button className="w-full mt-8" variant="destructive">
+                    <LogOut />
                     Se déconnecter
                 </Button>
             </AlertDialogTrigger>

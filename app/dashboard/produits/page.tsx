@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 
 const fetcher = async (url: string) => {
-  const res = await fetch(url) 
+  const res = await fetch(url)
   const data = await res.json()
 
   if (!res.ok) throw new Error(data.errorMsg || 'Erreur lors du chargement.')
@@ -41,13 +41,13 @@ const ProduitsList = () => {
   const produitsEnStock = (data || []).filter((produit) => produit.stock > 0)
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
-      {produitsEnStock.map((produit) => (
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-10">
+      {produitsEnStock.map((produit: Produit) => (
         <Card key={produit.id} className="overflow-hidden">
           <img
             src={produit.image_url}
             alt={produit.nom}
-            className="w-full object-cover"
+            className="w-full h-52 object-cover"
           />
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
@@ -65,6 +65,7 @@ const ProduitsList = () => {
         </Card>
       ))}
     </div>
+
   )
 }
 

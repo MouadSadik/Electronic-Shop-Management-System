@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, } from '@/components/ui/alert'
 import {
   AlertDialog, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
@@ -294,45 +295,48 @@ const ListCategories = () => {
 
                 {/* Delete Dialog */}
                 <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      onClick={() => setDeleteId(cat.id)}
-                      disabled={isUpdating || isDeleting}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
-                    </AlertDialogHeader>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Êtes-vous sûr de vouloir supprimer la catégorie "<strong>{cat.nom}</strong>" ?
-                      Cette action est irréversible.
-                    </p>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel disabled={isDeleting}>
-                        Annuler
-                      </AlertDialogCancel>
-                      <Button
-                        variant="destructive"
-                        onClick={() => deleteId && handleDelete(deleteId)}
-                        disabled={isDeleting}
-                      >
-                        {isDeleting ? (
-                          <>
-                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                            Suppression...
-                          </>
-                        ) : (
-                          'Supprimer'
-                        )}
-                      </Button>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button
+      variant="destructive"
+      size="icon"
+      onClick={() => setDeleteId(cat.id)}
+      disabled={isUpdating || isDeleting}
+    >
+      <Trash2 className="h-4 w-4" />
+    </Button>
+  </AlertDialogTrigger>
+
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Êtes-vous sûr de vouloir supprimer la catégorie "<strong>{cat.nom}</strong>" ?
+        Cette action est irréversible.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+
+    <AlertDialogFooter>
+      <AlertDialogCancel disabled={isDeleting}>
+        Annuler
+      </AlertDialogCancel>
+      <Button
+        variant="destructive"
+        onClick={() => deleteId && handleDelete(deleteId)}
+        disabled={isDeleting}
+      >
+        {isDeleting ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+            Suppression...
+          </>
+        ) : (
+          'Supprimer'
+        )}
+      </Button>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+
               </div>
             </CardHeader>
             <CardContent>
