@@ -5,7 +5,7 @@ import {
   Card, CardContent, CardHeader, CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription, } from '@/components/ui/alert'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
   AlertDialog, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription,
@@ -17,8 +17,8 @@ import {
   DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Trash2, Pencil, Loader2 } from 'lucide-react'
-import useSWR, { mutate } from 'swr'
+import { Trash2, Pencil, Loader2, RefreshCw } from 'lucide-react'
+import useSWR from 'swr'
 
 type Categorie = {
   id: number
@@ -92,7 +92,7 @@ const ListCategories = () => {
         setSuccessMsg('Catégorie supprimée avec succès.')
       }
     } catch (err) {
-      setErrorMsg('Erreur serveur lors de la suppression.')
+      setErrorMsg(`Erreur serveur lors de la suppression. ${err instanceof Error ? err.message : String(err)}`)
       // Revalidate to ensure data consistency
       await mutateCategories()
     } finally {
@@ -137,7 +137,7 @@ const ListCategories = () => {
         setIsDialogOpen(false)
       }
     } catch (err) {
-      setErrorMsg('Erreur serveur lors de la mise à jour.')
+      setErrorMsg(`Erreur serveur lors de la mise à jour. ${err instanceof Error ? err.message : String(err)}`)
       // Revalidate to ensure data consistency
       await mutateCategories()
     } finally {
@@ -223,16 +223,25 @@ const ListCategories = () => {
         </Alert>
       )}
 
-      {/* Refresh Button */}
-      
-        <h2 className="text-lg font-semibold mt-8 mb-5">Catégories ({categories.length})</h2>
-        
+      {/* Header with title and refresh button */}
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-lg font-semibold">Catégories ({categories.length})</h2>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => mutateCategories()}
+          disabled={isLoading}
+        >
+          <RefreshCw className="h-4 w-4 mr-2" />
+          Actualiser
+        </Button>
+      </div>
 
       {/* Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {categories.map((cat) => (
           <Card key={cat.id}>
-            <CardHeader className="flex items-center justify-between space-x-2">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0">
               <CardTitle className="text-base">Catégorie #{cat.id}</CardTitle>
               <div className="flex items-center gap-2">
                 {/* Edit Dialog */}
@@ -295,48 +304,47 @@ const ListCategories = () => {
 
                 {/* Delete Dialog */}
                 <AlertDialog>
-  <AlertDialogTrigger asChild>
-    <Button
-      variant="destructive"
-      size="icon"
-      onClick={() => setDeleteId(cat.id)}
-      disabled={isUpdating || isDeleting}
-    >
-      <Trash2 className="h-4 w-4" />
-    </Button>
-  </AlertDialogTrigger>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      onClick={() => setDeleteId(cat.id)}
+                      disabled={isUpdating || isDeleting}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </AlertDialogTrigger>
 
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
-      <AlertDialogDescription>
-        Êtes-vous sûr de vouloir supprimer la catégorie "<strong>{cat.nom}</strong>" ?
-        Cette action est irréversible.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Confirmer la suppression ?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Êtes-vous sûr de vouloir supprimer la catégorie &ldquo;<strong>{cat.nom}</strong>&rdquo; ?
+                        Cette action est irréversible.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
 
-    <AlertDialogFooter>
-      <AlertDialogCancel disabled={isDeleting}>
-        Annuler
-      </AlertDialogCancel>
-      <Button
-        variant="destructive"
-        onClick={() => deleteId && handleDelete(deleteId)}
-        disabled={isDeleting}
-      >
-        {isDeleting ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin mr-2" />
-            Suppression...
-          </>
-        ) : (
-          'Supprimer'
-        )}
-      </Button>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
-
+                    <AlertDialogFooter>
+                      <AlertDialogCancel disabled={isDeleting}>
+                        Annuler
+                      </AlertDialogCancel>
+                      <Button
+                        variant="destructive"
+                        onClick={() => deleteId && handleDelete(deleteId)}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                            Suppression...
+                          </>
+                        ) : (
+                          'Supprimer'
+                        )}
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </CardHeader>
             <CardContent>

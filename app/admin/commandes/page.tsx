@@ -79,7 +79,7 @@ const AllCommandes = () => {
         toast.error(data.error || 'Erreur lors de la mise à jour')
       }
     } catch (err) {
-      toast.error('Erreur lors de la mise à jour')
+      toast.error('Erreur lors de la mise à jour' + err)
     } finally {
       setUpdatingStatus(null)
     }

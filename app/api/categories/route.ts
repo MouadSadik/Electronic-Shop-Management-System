@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 //get tout les categories
 export async function GET() {
     try {
-        const supabase = createClient()
         /*const { data: { user }, error: authError } = await (await supabase).auth.getUser()
 
         if (authError || !user) {

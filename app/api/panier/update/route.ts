@@ -25,6 +25,6 @@ export async function POST(req: Request) {
         })
         return NextResponse.json({ success: true, ligneCommande })
     } catch (err) {
-        return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+        return NextResponse.json({ error: 'Erreur serveur' + err}, { status: 500 })
     }
 }

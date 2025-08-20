@@ -187,7 +187,7 @@ export default function ListProduits() {
                       <AlertDialogHeader>
                         <AlertDialogTitle>Confirmer la suppression</AlertDialogTitle>
                         <AlertDialogDescription>
-                          Voulez-vous vraiment supprimer le produit "<strong>{produit.nom}</strong>" ? Cette action est irréversible.
+                          Voulez-vous vraiment supprimer le produit &ldquo;<strong>{produit.nom}</strong>&rdquo; ? Cette action est irréversible.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>

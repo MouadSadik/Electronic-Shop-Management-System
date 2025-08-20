@@ -33,7 +33,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'Commande liée introuvable' }, { status: 404 })
         }
 
-        const mode_paiement = commande.mode_paiement
+        //const mode_paiement = commande.mode_paiement
 
         const result = await prisma.$transaction(async (tx) => {
             // Créer le paiement

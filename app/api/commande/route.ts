@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
-import { stat } from 'fs'
 
 export async function POST(req: Request) {
     const supabase = createClient()

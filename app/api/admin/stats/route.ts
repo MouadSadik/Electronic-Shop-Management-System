@@ -59,7 +59,7 @@ export async function GET() {
       paiementsParMode,
     });
 
-  } catch (error) {
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: 'Erreur serveur' + err }, { status: 500 });
   }
 }

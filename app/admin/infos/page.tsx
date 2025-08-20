@@ -1,7 +1,4 @@
-
-import { useEffect, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
 import { UserCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
@@ -11,7 +8,7 @@ export default async function AdminInfos() {
   const supabase = await createClient()
   const { data: { user }, error: authError, } = await supabase.auth.getUser()
 
-  if (!user) notFound()
+  if (!user || authError) notFound()
 
   const utilisateur = await prisma.utilisateur.findUnique({
     where: { supabase_user_id: user.id },

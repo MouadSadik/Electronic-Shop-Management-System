@@ -57,7 +57,7 @@ export async function POST(req: Request) {
 
 //get pour recuperer les factures d'un client
 
-export async function GET(req: Request) {
+export async function GET() {
   const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
 

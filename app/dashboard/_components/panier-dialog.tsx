@@ -35,9 +35,12 @@ interface LigneCommande {
   }
 }
 
+interface PanierData {
+  lignes: LigneCommande[]
+  commandeId: number | null
+}
 
-
-const fetcher = async (url: string) => {
+const fetcher = async (url: string): Promise<PanierData> => {
   const res = await fetch(url, { method: 'POST' })
   if (!res.ok) throw new Error('Erreur lors du chargement du panier')
   return res.json()
@@ -47,7 +50,7 @@ export default function PanierSheet() {
   const [open, setOpen] = useState(false)
   const [ligneASupprimer, setLigneASupprimer] = useState<LigneCommande | null>(null)
 
-  const { data, error, isLoading, mutate } = useSWR(
+  const { data, isLoading, mutate } = useSWR<PanierData>(
     open ? '/api/commande/devis' : null,
     fetcher
   )
@@ -74,8 +77,8 @@ export default function PanierSheet() {
     mutate() // refresh panier
   }
 
-  const totalProduits = lignes.reduce((acc: any, l: { quantite: any }) => acc + l.quantite, 0)
-  const totalPrix = lignes.reduce((acc: number, l: { quantite: number; produit: { prix: number } }) => acc + l.quantite * l.produit.prix, 0)
+  const totalProduits = lignes.reduce((acc: number, l: LigneCommande) => acc + l.quantite, 0)
+  const totalPrix = lignes.reduce((acc: number, l: LigneCommande) => acc + l.quantite * l.produit.prix, 0)
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
