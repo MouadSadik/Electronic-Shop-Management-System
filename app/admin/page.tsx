@@ -134,7 +134,7 @@ export default function DashboardAdmin() {
 
                 <Card className="bg-neutral/10" tabIndex={0}>
                     <CardHeader>
-                        <CardTitle>Chiffre d'affaires</CardTitle>
+                        <CardTitle>Chiffre d&apos;affaires</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-4xl font-semibold">{caTotal}</p>

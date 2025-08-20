@@ -189,7 +189,7 @@ export default function FormulaireContact() {
                                     <div>
                                         <h3 className="font-bold text-primary text-lg mb-2">Réponse rapide</h3>
                                         <p className="text-slate-700 text-sm leading-relaxed">
-                                            Nous répondons à tous les messages sous 24h. En cas d'urgence, appelez-nous directement.
+                                            Nous répondons à tous les messages sous 24h. En cas d&apos;urgence, appelez-nous directement.
                                         </p>
                                     </div>
                                 </div>
