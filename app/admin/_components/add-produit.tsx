@@ -28,7 +28,7 @@ const AddProduit = () => {
 
   const uploadImage = async (file: File) => {
     const fileName = `${Date.now()}-${file.name}`
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('produit-image')
       .upload(fileName, file)
 
@@ -86,11 +86,16 @@ const AddProduit = () => {
 
       // Optionnel : cacher le formulaire après ajout
       setShowForm(false)
-    } catch (err: any) {
-      setErrorMsg(err.message)
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) {
+  if (err instanceof Error) {
+    setErrorMsg(err.message)
+  } else {
+    setErrorMsg('Une erreur inconnue est survenue')
+  }
+} finally {
+  setLoading(false)
+}
+
   }
 
   if (!showForm) {

@@ -31,7 +31,6 @@ const navItems = [
   { href: '/admin/infos', label: 'Admin', icon: User },
 ]
 
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
 
@@ -55,7 +54,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <Link className='items-center flex justify-center' href="/">
           <Button className='mt-5 w-full'>
             <ArrowLeft />
-            Retour A L'accueil
+            Retour A L&apos;accueil
           </Button>
         </Link>
       </aside>
@@ -75,7 +74,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <SheetHeader>
             
             <SheetTitle>Espace Admin</SheetTitle>
-            <SheetDescription>Accédez aux différentes sections d'administration.</SheetDescription>
+            <SheetDescription>Accédez aux différentes sections d&apos;administration.</SheetDescription>
           </SheetHeader>
           <div className=" space-y-2">{renderNavLinks(true)}</div>
           <div className="mt-4">
@@ -83,7 +82,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Link className='items-center flex justify-center' href="/">
           <Button className='mt-5 w-full'>
             <ArrowLeft />
-            Retour A L'accueil
+            Retour A L&apos;accueil
           </Button>
         </Link>
           </div>

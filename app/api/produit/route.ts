@@ -44,7 +44,6 @@ export async function POST(req: Request) {
 
 //get all products 
 export async function GET() {
-    const supabase = await createClient()
     
     try {
         const produits = await prisma.produit.findMany({

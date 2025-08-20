@@ -57,7 +57,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <Link className='items-center flex justify-center' href="/">
           <Button className='mt-5 w-full'>
             <ArrowLeft />
-            Retour A L'accueil
+            Retour A L&apos;accueil
           </Button>
         </Link>
       </div>
@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <SheetContent side="left" className="w-64 p-4">
           <SheetHeader>
             <SheetTitle>Espace Client</SheetTitle>
-            <SheetDescription>Accédez aux différentes sections d'administration.</SheetDescription>
+            <SheetDescription>Accédez aux différentes sections d&apos;administration.</SheetDescription>
           </SheetHeader>
           <div>{navLinks(true)}</div>
         </SheetContent>

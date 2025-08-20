@@ -2,6 +2,16 @@ import { prisma } from "@/lib/prisma"
 import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
 
+interface Produit {
+  nom?: string;
+  description?: string;
+  prix?: number;
+  stock?: number;
+  promo?: boolean;
+  image_url?: string;
+  categorie_id?: number;
+}
+
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
   const { data: { user }, error: authError, } = await supabase.auth.getUser()
@@ -43,7 +53,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     )
   }
 
-  const updateData: any = {}
+  const updateData: Produit = {}
   if (nom !== undefined) updateData.nom = nom
   if (description !== undefined) updateData.description = description
   if (prix !== undefined) updateData.prix = parseFloat(prix)

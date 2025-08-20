@@ -3,6 +3,7 @@ import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import { Badge } from '../ui/badge'
 import { AjouterAuPanierButton } from '@/app/dashboard/_components/ajout-au-panier'
+import { Produit } from '@/app/generated/prisma'
 
 const TopSellers = async () => {
 
@@ -22,7 +23,7 @@ const TopSellers = async () => {
                 Top Sellers
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-10">
-                {produits.map((produit: any) => (
+                {produits.map((produit: Produit) => (
                     <Card key={produit.id} className="overflow-hidden">
                         <img
                             src={produit.image_url}

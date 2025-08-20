@@ -13,7 +13,6 @@ import {
     User,
     Send,
     Clock,
-    CheckCircle,
     ArrowRight
 } from "lucide-react";
 

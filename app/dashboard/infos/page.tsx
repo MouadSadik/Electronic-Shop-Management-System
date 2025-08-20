@@ -9,13 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Pencil, UserCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-type Utilisateur = {
-  nom: string
-  email: string
-  client?: {
-    telephone: string
-  }
-}
+
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 
