@@ -23,29 +23,29 @@ const Footer = () => {
                         <h3 className="text-white text-lg font-semibold mb-4">Categories </h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="/produits/categorie/2" className="text-secondary hover:text-white transition-colors duration-300">
+                                <Link href="/produits/categorie/2" className="text-secondary hover:text-white transition-colors duration-300">
                                     Pc Portable
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/produits/categorie/7" className="text-secondary hover:text-white transition-colors duration-300">
+                                <Link href="/produits/categorie/7" className="text-secondary hover:text-white transition-colors duration-300">
                                     Gaming
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/produits/categorie/3" className="text-secondary hover:text-white transition-colors duration-300">
+                                <Link href="/produits/categorie/3" className="text-secondary hover:text-white transition-colors duration-300">
                                     Smarthphone
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/produits/categorie/1" className="text-secondary hover:text-white transition-colors duration-300">
+                                <Link href="/produits/categorie/1" className="text-secondary hover:text-white transition-colors duration-300">
                                     Les ecouteurs
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/produits/categorie/9" className="text-secondary hover:text-white transition-colors duration-300">
+                                <Link href="/produits/categorie/9" className="text-secondary hover:text-white transition-colors duration-300">
                                     TV
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -56,9 +56,9 @@ const Footer = () => {
                         <div className="space-y-3">
                             <div className="flex items-center gap-3">
                                 <Mail className="w-5 h-5 text-secondary" />
-                                <a href="mailto:contact@electroshop.ma" className="text-secondary hover:text-white transition-colors duration-300">
+                                <Link href="mailto:contact@electroshop.ma" className="text-secondary hover:text-white transition-colors duration-300">
                                     contact@electroshop.ma
-                                </a>
+                                </Link>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 text-secondary" />
@@ -75,16 +75,16 @@ const Footer = () => {
                     <div>
                         <h3 className="text-white text-lg font-semibold mb-4">Suivez-nous</h3>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-secondary hover:text-white transition-colors duration-300">
+                            <Link href="#" className="text-secondary hover:text-white transition-colors duration-300">
                                 <Facebook className="w-6 h-6" />
-                            </a>
+                            </Link>
 
-                            <a href="#" className="text-secondary hover:text-white transition-colors duration-300">
+                            <Link href="#" className="text-secondary hover:text-white transition-colors duration-300">
                                 <Instagram className="w-6 h-6" />
-                            </a>
-                            <a href="#" className="text-secondary hover:text-white transition-colors duration-300">
+                            </Link>
+                            <Link href="#" className="text-secondary hover:text-white transition-colors duration-300">
                                 <Linkedin className="w-6 h-6" />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

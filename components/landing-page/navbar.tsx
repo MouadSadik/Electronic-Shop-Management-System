@@ -36,7 +36,12 @@ const Navbar = () => {
   const handleSearch = useCallback((term: string) => {
     const params = new URLSearchParams(searchParams.toString())
     console.log(term)
-    term ? params.set('search', term) : params.delete('search')
+    if (term) {
+  params.set('search', term)
+} else {
+  params.delete('search')
+}
+
     router.push(`/produits?${params.toString()}`)
 
 
@@ -51,7 +56,7 @@ const Navbar = () => {
         if (!res.ok) setErrorMsg(data.error || 'Erreur lors du chargement.')
         else setCategories(data.categorie || [])
       } catch (err) {
-        setErrorMsg('Erreur de connexion au serveur.')
+        setErrorMsg('Erreur de connexion au serveur.' + err)
       } finally {
         setLoading(false)
       }
