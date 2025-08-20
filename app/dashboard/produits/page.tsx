@@ -7,9 +7,19 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
+// Définition de l'interface Produit
+interface Produit {
+  id: number
+  nom: string
+  stock: number
+  image_url: string
+  promo: boolean
+  description: string
+  prix: number
+}
 
-
-const fetcher = async (url: string) => {
+// Fetcher pour SWR
+const fetcher = async (url: string): Promise<Produit[]> => {
   const res = await fetch(url)
   const data = await res.json()
 
@@ -38,11 +48,12 @@ const ProduitsList = () => {
     )
   }
 
+  // On filtre seulement les produits en stock
   const produitsEnStock = (data || []).filter((produit) => produit.stock > 0)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-10">
-      {produitsEnStock.map((produit: Produit) => (
+      {produitsEnStock.map((produit) => (
         <Card key={produit.id} className="overflow-hidden">
           <img
             src={produit.image_url}
@@ -65,7 +76,6 @@ const ProduitsList = () => {
         </Card>
       ))}
     </div>
-
   )
 }
 
