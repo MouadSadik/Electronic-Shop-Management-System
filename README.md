@@ -1,4 +1,4 @@
-# 🛒 Electronic Shop Management System
+# Internship Project - Electronic Shop Management System
 
 This project is a full-stack commercial management web application for an electronic shop.  
 It allows **administrators** to manage products, clients, and orders, while **clients** have their own dashboard to track purchases, invoices, and account information.
