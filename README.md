@@ -92,15 +92,15 @@ The project uses a relational schema designed for commercial management:
    npm run dev
    ```
 6. **Access the app**
-- Go to http://localhost:3000
-  ---
+Go to http://localhost:3000
+---
 
 ### 🌐 Deployement 
 - This project is deployed on Vercel.
 - When pushing to the main branch, Vercel automatically builds and deploys the application.
 
-- ➡️ Make sure to configure your environment variables on Vercel (same as .env file).y
-  ---
+ - Make sure to configure your environment variables on Vercel (same as .env file).y
+---
 
 ### 🧑‍💻 Author 
 - Developed by **Mouad Sadik**
