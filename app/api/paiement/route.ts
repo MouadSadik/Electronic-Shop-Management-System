@@ -76,11 +76,12 @@ export async function POST(req: Request) {
         })
 
         return NextResponse.json(result, { status: 201 })
-    } catch (error) {
-        console.error(error)
-        return NextResponse.json(
-            { message: 'Erreur lors de l\'enregistrement du paiement' },
-            { status: 500 }
-        )
-    }
+    }  catch (error) {
+    console.error('Erreur paiement:', error)
+    return NextResponse.json(
+        { message: 'Erreur lors de l\'enregistrement du paiement', detail: error },
+        { status: 500 }
+    )
+}
+
 }

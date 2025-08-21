@@ -17,7 +17,7 @@ import {
   DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Trash2, Pencil, Loader2, RefreshCw } from 'lucide-react'
+import { Trash2, Pencil, Loader2 } from 'lucide-react'
 import useSWR from 'swr'
 
 type Categorie = {
@@ -226,15 +226,7 @@ const ListCategories = () => {
       {/* Header with title and refresh button */}
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-lg font-semibold">Catégories ({categories.length})</h2>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => mutateCategories()}
-          disabled={isLoading}
-        >
-          <RefreshCw className="h-4 w-4 mr-2" />
-          Actualiser
-        </Button>
+
       </div>
 
       {/* Categories Grid */}

@@ -3,7 +3,8 @@
 import useSWR from 'swr';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, PackageCheck, PackageX, Clock, Truck } from 'lucide-react';
+import { PackageCheck, PackageX, Clock, Truck } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -22,19 +23,21 @@ export default function DashboardClient() {
   if (isLoading || !data) {
     return (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
-        {[1, 2, 3, 4].map(i => (
-          <Card key={i}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Loader2 className="animate-spin text-muted" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">...</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+  {[1, 2, 3, 4].map((i) => (
+    <Card key={i} className="p-4">
+      <CardHeader>
+        <CardTitle className="mb-2">
+          <Skeleton className="h-6 w-3/4" />
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+        <Skeleton className="h-8 w-1/2 mt-2" />
+      </CardContent>
+    </Card>
+  ))}
+</div>
     );
   }
 

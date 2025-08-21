@@ -90,7 +90,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </Sheet>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-6 md:ml-64 bg-gray-50 relative">
+      <main className="flex-1 p-4 md:p-6 md:ml-64  relative">
+        <Link href="/" className="text-xl font-bold text-primary md:block hidden">
+            ElectroShop
+        </Link>
         <div className="absolute top-4 right-4 z-40">
           <PanierDialog />
         </div>

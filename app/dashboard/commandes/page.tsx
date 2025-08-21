@@ -1,5 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from '@/components/ui/badge'
 import { prisma } from '@/lib/prisma'
 import { createClient } from '@/lib/supabase/server'
@@ -47,55 +46,51 @@ const CommandesForClient = async () => {
     })
 
     return (
-        <Card className="mt-10">
-            <CardHeader>
-                <CardTitle className="text-primary">Toutes mes Commandes</CardTitle>
-            </CardHeader>
-            <CardContent>
-                {commandes.length === 0 ? (
-                    <p className="text-s">Vous n’avez passé aucune commande.</p>
-                ) : (
-                    <Table>
-                        <TableHeader>
-                            <TableRow className="text-secondary">
-                                <TableHead>Commande</TableHead>
-                                <TableHead>Date</TableHead>
-                                <TableHead>Produits</TableHead>
-                                <TableHead>Total</TableHead>
-                                <TableHead>Statut</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {commandes.map((commande) => {
-                                const total = commande.LigneCommande.reduce(
-                                    (sum, p) => sum + p.produit.prix * p.quantite,
-                                    0
-                                )
-                                return (
-                                    <TableRow key={commande.id}>
-                                        <TableCell className="font-medium">#{commande.id}</TableCell>
-                                        <TableCell>{new Date(commande.date_creation).toLocaleDateString()}</TableCell>
-                                        <TableCell>
-                                            <ul className="text-sm  list-disc ml-4">
-                                                {commande.LigneCommande.map((p) => (
-                                                    <li key={p.id}>{p.produit.nom} x{p.quantite}</li>
-                                                ))}
-                                            </ul>
-                                        </TableCell>
-                                        <TableCell>{total.toFixed(2)} DH</TableCell>
-                                        <TableCell>
-                                            <Badge className={statusColors[commande.status] || ''}>
-                                                {commande.status}
-                                            </Badge>
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            })}
-                        </TableBody>
-                    </Table>
-                )}
-            </CardContent>
-        </Card>
+        <div className="mt-10">
+            <h2 className="text-primary text-lg font-semibold mb-4">Toutes mes Commandes</h2>
+            {commandes.length === 0 ? (
+                <p className="text-sm">Vous n’avez passé aucune commande.</p>
+            ) : (
+                <Table>
+                    <TableHeader>
+                        <TableRow className="text-secondary">
+                            <TableHead>Commande</TableHead>
+                            <TableHead>Date</TableHead>
+                            <TableHead>Produits</TableHead>
+                            <TableHead>Total</TableHead>
+                            <TableHead>Statut</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {commandes.map((commande) => {
+                            const total = commande.LigneCommande.reduce(
+                                (sum, p) => sum + p.produit.prix * p.quantite,
+                                0
+                            )
+                            return (
+                                <TableRow key={commande.id}>
+                                    <TableCell className="font-medium">#{commande.id}</TableCell>
+                                    <TableCell>{new Date(commande.date_creation).toLocaleDateString()}</TableCell>
+                                    <TableCell>
+                                        <ul className="text-sm list-disc ml-4">
+                                            {commande.LigneCommande.map((p) => (
+                                                <li key={p.id}>{p.produit.nom} x{p.quantite}</li>
+                                            ))}
+                                        </ul>
+                                    </TableCell>
+                                    <TableCell>{total.toFixed(2)} DH</TableCell>
+                                    <TableCell>
+                                        <Badge className={statusColors[commande.status] || ''}>
+                                            {commande.status}
+                                        </Badge>
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        })}
+                    </TableBody>
+                </Table>
+            )}
+        </div>
     )
 }
 

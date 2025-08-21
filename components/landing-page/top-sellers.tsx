@@ -15,15 +15,15 @@ const TopSellers = async () => {
         },
     })
 
-    {/*const topProduits = produits.sort((a, b) => b._count.lignes - a._count.lignes).slice(0, 5)*/}
+    const topProduits = produits.sort((a, b) => b._count.lignes - a._count.lignes).slice(0, 5)
 
     return (
         <div className='mt-24 md:mx-10'>
-            <h2 className='font-bold text-primary text-3xl text-center mb-10'>
+            <h2 className='font-bold text-primary text-3xl text-center '>
                 Top Sellers
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 p-10">
-                {produits.map((produit: Produit) => (
+                {topProduits.map((produit: Produit) => (
                     <Card key={produit.id} className="overflow-hidden">
                         <img
                             src={produit.image_url}

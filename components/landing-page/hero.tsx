@@ -45,7 +45,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="w-full py-10 h-screen">
+    <section className="w-full pt-20 h-screen">
       <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-10">
         <div className="md:w-1/2 text-center md:text-left space-y-6">
           <h1 className={`font-bold leading-tight text-gray-900 ${
@@ -83,11 +83,11 @@ export default function HeroSection() {
 
         <div className="md:w-1/2 flex justify-center">
           <Image
-            src="/images/hero.png"
+            src="/hero.svg"
             alt="PC"
-            width={isMobile ? 300 : 400}
-            height={isMobile ? 300 : 400}
-            className="rounded-xl shadow-lg"
+            width={isMobile ? 300 : 500}
+            height={isMobile ? 300 : 500}
+            className=""
             priority
           />
         </div>
